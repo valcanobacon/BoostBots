@@ -1,0 +1,6 @@
+__pycache__
+*.macaroon
+*.cert
+.scratch
+*.egg-info
+venv
