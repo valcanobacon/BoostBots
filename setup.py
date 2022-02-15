@@ -16,6 +16,7 @@ setup(
         ],
     },
     install_requires=[
+        "lnd-grpc-client<1,>=0.3.39",
         "bottom<3,>=2.2.0",
         "click<9,>=8.0.3",
     ],
