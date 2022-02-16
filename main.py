@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import json
 import bottom
 import re
@@ -88,9 +89,17 @@ def cli(
                 app = data.get("app_name", "Unknown")
                 sender = data.get("sender_name", "Anonymous")
                 
-                boost_message = ""
-                if data.get("message"):
-                    boost_message = 'saying "\x02{}\x02"'.format(data["message"])
+                boost_message = []
+                if "message" in data:
+                    boost_message.append('saying "\x02{}\x02"'.format(data["message"]))
+                if "podcast" in data:
+                    boost_message.append('for the "\x02{}\x02" podcast'.format(data["podcast"]))
+                if "episode" in data:
+                    boost_message.append('on episode "\x02{}\x02"'.format(data["episode"]))
+                if "ts" in data:
+                    timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
+                    boost_message.append('@ {}'.format(timestamp))
+                boost_message = " ".join(boost_message)
 
                 amount = int(data.get("value_msat_total", 0)) // 1000
                 if not amount:
