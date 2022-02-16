@@ -90,17 +90,17 @@ def cli(
                 app = data.get("app_name", "Unknown")
                 sender = data.get("sender_name", "Anonymous")
 
+                podcast = ""
+                if "podcast" in data:
+                    podcast = f'\x02[{data["podcast"]}]\x02 '
+
                 boost_message = []
                 if "message" in data:
                     boost_message.append(f"saying \"\x02{data['message']}\x02\"")
-                if "podcast" in data:
-                    boost_message.append(
-                        f"for the \"\x02{data['podcast']}\x02\" podcast"
-                    )
                 if "episode" in data:
                     boost_message.append(f"on episode \"\x02{data['episode']}\x02\"")
                 if "ts" in data:
-                    timestamp = str(timedelta(seconds=int(data["ts"])))
+                    timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
                     boost_message.append(f"@ {timestamp}")
                 boost_message = " ".join(boost_message)
 
@@ -109,10 +109,8 @@ def cli(
                     amount = invoice.value
 
                 numerology = number_to_numerology(amount)
-                if numerology:
-                    numerology += " "
 
-                message = f"{numerology}{sender} boosted \x02{amount}\x02 sats {boost_message} via {app}!"
+                message = f"{numerology}{podcast}{sender} boosted \x02{amount}\x02 sats {boost_message} via {app}!"
 
                 click.echo(message)
                 bot.send("PRIVMSG", target=irc_channel, message=message)
@@ -158,7 +156,7 @@ def number_to_numerology(number: int) -> str:
     if not results:
         return ""
 
-    return "".join(results)
+    return "".join(results) + " "
 
 
 if __name__ == "__main__":
