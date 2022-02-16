@@ -1,18 +1,19 @@
 import asyncio
 import datetime
 import json
-import bottom
 import re
 
+import bottom
 import click
-
 from lndgrpc import AsyncLNDClient
 
 
 @click.command()
 @click.option("--lnd-host", default="127.0.0.1")
 @click.option("--lnd-port", type=click.IntRange(0), default=10009)
-@click.option("--lnd-macaroon", type=click.Path(exists=True), default="readonly.macaroon")
+@click.option(
+    "--lnd-macaroon", type=click.Path(exists=True), default="readonly.macaroon"
+)
 @click.option("--lnd-tlscert", type=click.Path(exists=True), default="tls.cert")
 @click.option("--irc-host", default="irc.zeronode.net")
 @click.option("--irc-port", type=int, default=6697)
@@ -88,17 +89,19 @@ def cli(
 
                 app = data.get("app_name", "Unknown")
                 sender = data.get("sender_name", "Anonymous")
-                
+
                 boost_message = []
                 if "message" in data:
-                    boost_message.append('saying "\x02{}\x02"'.format(data["message"]))
+                    boost_message.append(f"saying \"\x02{data['message']}\x02\"")
                 if "podcast" in data:
-                    boost_message.append('for the "\x02{}\x02" podcast'.format(data["podcast"]))
+                    boost_message.append(
+                        f"for the \"\x02{data['podcast']}\x02\" podcast"
+                    )
                 if "episode" in data:
-                    boost_message.append('on episode "\x02{}\x02"'.format(data["episode"]))
+                    boost_message.append(f"on episode \"\x02{data['episode']}\x02\"")
                 if "ts" in data:
-                    timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
-                    boost_message.append('@ {}'.format(timestamp))
+                    timestamp = str(timedelta(seconds=int(data["ts"])))
+                    boost_message.append(f"@ {timestamp}")
                 boost_message = " ".join(boost_message)
 
                 amount = int(data.get("value_msat_total", 0)) // 1000
@@ -125,7 +128,7 @@ def number_to_numerology(number: int) -> str:
     results = []
 
     regex = r"33|69|420|2695|9653|[68]00[68]|^2+$"
-    
+
     matches = re.findall(regex, str(number))
 
     for match in matches:
