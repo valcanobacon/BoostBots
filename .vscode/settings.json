@@ -1,5 +1,11 @@
 {
     "cSpell.words": [
+        "ENDOFMOTD",
+        "htlcs",
+        "lndgrpc",
+        "msat",
+        "NOMOTD",
+        "sats",
         "tlscert"
     ]
 }

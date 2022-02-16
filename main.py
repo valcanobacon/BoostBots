@@ -1,6 +1,7 @@
 import asyncio
 import json
 import bottom
+import re
 
 import click
 
@@ -86,18 +87,17 @@ def cli(
 
                 app = data.get("app_name", "?")
                 sender = data.get("sender_name", "Anonymous")
-                message = data.get("message")
+                message = data.get("message", "")
 
                 amount = int(data.get("value_msat_total", 0)) // 1000
                 if not amount:
                     amount = invoice.value
 
-                message = "{sender} boosted {amount} sats via {app}! {message}".format(
-                    sender=sender,
-                    amount=amount,
-                    app=app,
-                    message=message,
-                )
+                numerology = number_to_numerology(amount)
+                if numerology:
+                    numerology += " "
+
+                message = f"{numerology}{sender} boosted {amount} sats via {app}!  {message}"
 
                 click.echo(message)
                 bot.send("PRIVMSG", target=irc_channel, message=message)
@@ -107,6 +107,37 @@ def cli(
     bot.loop.run_until_complete(subscribe_invoices())
 
     bot.loop.run_forever()
+
+
+def number_to_numerology(number: int) -> str:
+    results = []
+
+    regex = r"33|69|420|[68]00[68]|^2+$"
+    
+    matches = re.findall(regex, str(number))
+
+    for match in matches:
+        if match == "420":
+            results.append("🌱")
+
+        if match == "69":
+            results.append("💋")
+
+        if match == "33":
+            results.append("✨")
+
+        if match in ["8008", "6006", "8006", "6008"]:
+            results.append("🎱")
+            results.append("🎱")
+
+        if re.search(r"^2+$", match):
+            for _ in range(len(match)):
+                results.append("🦆")
+
+    if not results:
+        return ""
+
+    return "".join(results)
 
 
 if __name__ == "__main__":
