@@ -90,13 +90,13 @@ def cli(
                 sender = data.get("sender_name", "Anonymous")
                 
                 boost_message = []
-                if data.get("message"):
+                if "message" in data:
                     boost_message.append('saying "\x02{}\x02"'.format(data["message"]))
-                if data.get("podcast"):
+                if "podcast" in data:
                     boost_message.append('for the "\x02{}\x02" podcast'.format(data["podcast"]))
-                if data.get("episode"):
+                if "episode" in data:
                     boost_message.append('on episode "\x02{}\x02"'.format(data["episode"]))
-                if data.get("ts"):
+                if "ts" in data:
                     timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
                     boost_message.append('@ {}'.format(timestamp))
                 boost_message = " ".join(boost_message)
