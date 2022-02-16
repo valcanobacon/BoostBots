@@ -85,9 +85,12 @@ def cli(
                 if "action" not in data or str(data["action"]).lower() != "boost":
                     continue
 
-                app = data.get("app_name", "?")
+                app = data.get("app_name", "Unknown")
                 sender = data.get("sender_name", "Anonymous")
-                message = data.get("message", "")
+                
+                boost_message = ""
+                if data.get("message"):
+                    boost_message = 'saying "\x02{}\x02"'.format(data["message"])
 
                 amount = int(data.get("value_msat_total", 0)) // 1000
                 if not amount:
@@ -97,7 +100,7 @@ def cli(
                 if numerology:
                     numerology += " "
 
-                message = f"{numerology}{sender} boosted {amount} sats via {app}!  {message}"
+                message = f"{numerology}{sender} boosted \x02{amount}\x02 sats {boost_message} via {app}!"
 
                 click.echo(message)
                 bot.send("PRIVMSG", target=irc_channel, message=message)
