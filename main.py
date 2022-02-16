@@ -124,7 +124,7 @@ def cli(
 def number_to_numerology(number: int) -> str:
     results = []
 
-    regex = r"33|69|420|[68]00[68]|^2+$"
+    regex = r"33|69|420|2695|9653|[68]00[68]|^2+$"
     
     matches = re.findall(regex, str(number))
 
@@ -137,6 +137,12 @@ def number_to_numerology(number: int) -> str:
 
         if match == "33":
             results.append("✨")
+
+        if match == "2695":
+            results.append("🎳")
+
+        if match == "9653":
+            results.append("🐺")
 
         if match in ["8008", "6006", "8006", "6008"]:
             results.append("🎱")
