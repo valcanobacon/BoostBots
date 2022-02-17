@@ -92,26 +92,30 @@ def cli(
 
                     podcast = ""
                     if "podcast" in data and data["podcast"]:
-                        podcast = f"\x02[{data['podcast']}]\x02 " # trailing space
+                        podcast = f"\x02[{data['podcast']}]\x02 "  # trailing space
 
                     message = ""
                     if "message" in data and data["message"]:
-                        message = f"saying \"\x02{data['message']}\x02\" " # trailing space
+                        message = (
+                            f"saying \"\x02{data['message']}\x02\" "  # trailing space
+                        )
 
-                    episode = ""                    
+                    episode = ""
                     if "episode" in data and data["episode"]:
-                        episode = f"on episode \"\x02{data['episode']}\x02\" " # trailing space
+                        episode = f"on episode \"\x02{data['episode']}\x02\" "  # trailing space
 
                     timestamp = ""
                     if "ts" in data and data["ts"]:
-                        timestamp = "@ {} ".format(datetime.timedelta(seconds=int(data["ts"]))) # trailing space
+                        timestamp = "@ {} ".format(
+                            datetime.timedelta(seconds=int(data["ts"]))
+                        )  # trailing space
 
-                    amount = int(data.get("value_msat_total", 0)) // 1000
-                    if not amount:
-                        amount = invoice.value
-                    amount = f"\x02{amount}\x02 sats " # trailing space
+                    value = int(data.get("value_msat_total", 0)) // 1000
+                    if not value:
+                        value = invoice.value
+                    amount = f"\x02{value}\x02 sats "  # trailing space
 
-                    numerology = number_to_numerology(amount)
+                    numerology = number_to_numerology(value)
 
                     message = f"{numerology}{podcast}{sender} boosted {amount}{message}{episode}{timestamp}{app}"
 
