@@ -27,6 +27,7 @@ boostirc \
 | 420 | 🌱 | Stoner Donation |
 | 69 | 💋 | Swasslenuff Donation  |
 | 33 | ✨ | Magic Number Donation|
+| 666 | 😈 | Devil Donation |
 | 2695 | 🎳 | Bowler Donation |
 | 6006 | 🎱🎱 | Boobs Donation |
 | 8008 | 🎱🎱 | Boobs Donation |

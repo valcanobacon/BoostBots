@@ -7,6 +7,8 @@ import bottom
 import click
 from lndgrpc import AsyncLNDClient
 
+APP_PUBKEY = ""
+
 
 @click.command()
 @click.option("--lnd-host", default="127.0.0.1")
@@ -125,7 +127,7 @@ def cli(
 def number_to_numerology(number: int) -> str:
     results = []
 
-    regex = r"33|69|420|2695|9653|[68]00[68]|^2+$"
+    regex = r"33|69|420|666|2695|9653|[68]00[68]|^2+$"
 
     matches = re.findall(regex, str(number))
 
@@ -138,6 +140,9 @@ def number_to_numerology(number: int) -> str:
 
         if match == "33":
             results.append("✨")
+
+        if match == "666":
+            results.append("😈")
 
         if match == "2695":
             results.append("🎳")
