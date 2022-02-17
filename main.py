@@ -86,33 +86,34 @@ def cli(
                     if "action" not in data or str(data["action"]).lower() != "boost":
                         continue
 
-                    app = data.get("app_name", "Unknown")
+                    app = "via {}".format(data.get("app_name", "Unknown"))
+
                     sender = data.get("sender_name", "Anonymous")
 
                     podcast = ""
-                    if "podcast" in data:
-                        podcast = f'\x02[{data["podcast"]}]\x02 '
+                    if "podcast" in data and data["podcast"]:
+                        podcast = f"\x02[{data['podcast']}]\x02 " # trailing space
 
-                    boost_message = []
+                    message = ""
                     if "message" in data and data["message"]:
-                        boost_message.append(f"saying \"\x02{data['message']}\x02\"")
-                    if "episode" in data and data["episode"]:
-                        boost_message.append(
-                            f"on episode \"\x02{data['episode']}\x02\""
-                        )
-                    if "ts" in data and data["ts"]:
-                        timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
-                        boost_message.append(f"@ {timestamp}")
+                        message = f"saying \"\x02{data['message']}\x02\" " # trailing space
 
-                    boost_message = " ".join(boost_message)
+                    episode = ""                    
+                    if "episode" in data and data["episode"]:
+                        episode = f"on episode \"\x02{data['episode']}\x02\" " # trailing space
+
+                    timestamp = ""
+                    if "ts" in data and data["ts"]:
+                        timestamp = "@ {} ".format(datetime.timedelta(seconds=int(data["ts"]))) # trailing space
 
                     amount = int(data.get("value_msat_total", 0)) // 1000
                     if not amount:
                         amount = invoice.value
+                    amount = f"\x02{amount}\x02 sats " # trailing space
 
                     numerology = number_to_numerology(amount)
 
-                    message = f"{numerology}{podcast}{sender} boosted \x02{amount}\x02 sats {boost_message} via {app}!"
+                    message = f"{numerology}{podcast}{sender} boosted {amount}{message}{episode}{timestamp}{app}"
 
                     click.echo(message)
                     bot.send("PRIVMSG", target=irc_channel, message=message)
