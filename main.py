@@ -76,46 +76,49 @@ def cli(
         invoices = async_lnd.subscribe_invoices()
         async for invoice in invoices:
             for tlv in invoice.htlcs:
-
-                data = tlv.custom_records.get(7629169)
-                if data is None:
-                    continue
-
                 try:
+                    data = tlv.custom_records.get(7629169)
+                    if data is None:
+                        continue
+
                     data = json.loads(data)
-                except json.decoder.JSONDecodeError:
-                    continue
 
-                if "action" not in data or str(data["action"]).lower() != "boost":
-                    continue
+                    if "action" not in data or str(data["action"]).lower() != "boost":
+                        continue
 
-                app = data.get("app_name", "Unknown")
-                sender = data.get("sender_name", "Anonymous")
+                    app = data.get("app_name", "Unknown")
+                    sender = data.get("sender_name", "Anonymous")
 
-                podcast = ""
-                if "podcast" in data:
-                    podcast = f'\x02[{data["podcast"]}]\x02 '
+                    podcast = ""
+                    if "podcast" in data:
+                        podcast = f'\x02[{data["podcast"]}]\x02 '
 
-                boost_message = []
-                if "message" in data:
-                    boost_message.append(f"saying \"\x02{data['message']}\x02\"")
-                if "episode" in data:
-                    boost_message.append(f"on episode \"\x02{data['episode']}\x02\"")
-                if "ts" in data:
-                    timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
-                    boost_message.append(f"@ {timestamp}")
-                boost_message = " ".join(boost_message)
+                    boost_message = []
+                    if "message" in data and data["message"]:
+                        boost_message.append(f"saying \"\x02{data['message']}\x02\"")
+                    if "episode" in data and data["episode"]:
+                        boost_message.append(
+                            f"on episode \"\x02{data['episode']}\x02\""
+                        )
+                    if "ts" in data and data["ts"]:
+                        timestamp = str(datetime.timedelta(seconds=int(data["ts"])))
+                        boost_message.append(f"@ {timestamp}")
 
-                amount = int(data.get("value_msat_total", 0)) // 1000
-                if not amount:
-                    amount = invoice.value
+                    boost_message = " ".join(boost_message)
 
-                numerology = number_to_numerology(amount)
+                    amount = int(data.get("value_msat_total", 0)) // 1000
+                    if not amount:
+                        amount = invoice.value
 
-                message = f"{numerology}{podcast}{sender} boosted \x02{amount}\x02 sats {boost_message} via {app}!"
+                    numerology = number_to_numerology(amount)
 
-                click.echo(message)
-                bot.send("PRIVMSG", target=irc_channel, message=message)
+                    message = f"{numerology}{podcast}{sender} boosted \x02{amount}\x02 sats {boost_message} via {app}!"
+
+                    click.echo(message)
+                    bot.send("PRIVMSG", target=irc_channel, message=message)
+
+                except Exception as exception:
+                    click.echo(exception)
 
     bot.loop.run_until_complete(bot.connect())
 
