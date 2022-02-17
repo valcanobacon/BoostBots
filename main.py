@@ -153,6 +153,18 @@ def number_to_numerology(number: int) -> str:
             for _ in range(len(match)):
                 results.append("🦆")
 
+    if number >= 100000:
+        results.append("🔥")
+
+    if number >= 50000:
+        results.append("🔥")
+
+    if number >= 10000:
+        results.append("🔥")
+
+    if number < 10:
+        results.append("💩")
+
     if not results:
         return ""
 
