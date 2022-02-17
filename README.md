@@ -24,10 +24,15 @@ boostirc \
 
 | Sats | Emoji | Description |
 | - | - | - |
-| 420 | 🌱 | Stoner Donation |
-| 69 | 💋 | Swasslenuff Donation  |
+| 21 | 🪙 | Bitcoin donation|
 | 33 | ✨ | Magic Number Donation|
+| 42 | 🌠 | The Answer to Everything Donation|
+| 69 | 💋 | Swasslenuff Donation  |
+| 73 | 👋 | Greetings Donation  |
+| 88 | 🥰 | Love and Kisses Donation  |
+| 420 | 🌱 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
+| 1776 | 🇺🇸 | America Fuck Yeah Donation |
 | 2695 | 🎳 | Bowler Donation |
 | 6006 | 🎱🎱 | Boobs Donation |
 | 8008 | 🎱🎱 | Boobs Donation |
