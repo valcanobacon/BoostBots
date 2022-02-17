@@ -9,6 +9,14 @@ from lndgrpc import AsyncLNDClient
 
 APP_PUBKEY = ""
 
+APP_LINKS = {
+    "Fountain": " - https://fountain.fm ",
+    "Breez": " - https://breez.technology ",
+    "CurioCaster": " - https://curiocaster.com ",
+    "Podfriend": " - https://www.podfriend.com ",
+    "BoostCLI": " - https://github.com/valcanobacon/BoostCLI ",
+}
+
 
 @click.command()
 @click.option("--lnd-host", default="127.0.0.1")
@@ -87,6 +95,7 @@ def cli(
                         continue
 
                     app = data.get("app_name", "Unknown")
+                    app += APP_LINKS.get(app, "")
                     sender = data.get("sender_name", "Anonymous")
 
                     podcast = ""
