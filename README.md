@@ -26,7 +26,6 @@ boostirc \
 | - | - | - |
 | 21 | 🪙 | Bitcoin donation|
 | 33 | ✨ | Magic Number Donation|
-| 42 | 🌠 | The Answer to Everything Donation|
 | 69 | 💋 | Swasslenuff Donation  |
 | 73 | 👋 | Greetings Donation  |
 | 88 | 🥰 | Love and Kisses Donation  |
