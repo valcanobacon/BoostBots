@@ -166,7 +166,7 @@ def number_to_numerology(number: int) -> str:
             results.append("🥰")
 
         if match == "420":
-            results.append("🌱")
+            results.append("✌👽💨")
 
         if match == "666":
             results.append("😈")
