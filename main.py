@@ -102,15 +102,15 @@ def cli(
                     if "podcast" in data and data["podcast"]:
                         podcast = f"\x02[{data['podcast']}]\x02 "  # trailing space
 
+                    episode = ""
+                    if "episode" in data and data["episode"]:
+                        podcast = f"\x02[{data['episode']}]\x02 "  # trailing space
+
                     message = ""
                     if "message" in data and data["message"]:
                         message = (
                             f"saying \"\x02{data['message']}\x02\" "  # trailing space
                         )
-
-                    episode = ""
-                    if "episode" in data and data["episode"]:
-                        episode = f"on episode \"\x02{data['episode']}\x02\" "  # trailing space
 
                     timestamp = ""
                     if "ts" in data and data["ts"]:
@@ -125,7 +125,7 @@ def cli(
 
                     numerology = number_to_numerology(value)
 
-                    message = f"{numerology}{podcast}{sender} boosted {amount}{message}{episode}{timestamp}{app}"
+                    message = f"{numerology}{podcast}{episode}{sender} boosted {amount}{message}{timestamp}{app}"
 
                     click.echo(message)
                     for channel in irc_channel:
