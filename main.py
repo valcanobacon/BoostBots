@@ -104,7 +104,7 @@ def cli(
 
                     episode = ""
                     if "episode" in data and data["episode"]:
-                        podcast = f"\x02[{data['episode']}]\x02 "  # trailing space
+                        episode = f"\x02[{data['episode']}]\x02 "  # trailing space
 
                     message = ""
                     if "message" in data and data["message"]:
