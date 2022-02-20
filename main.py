@@ -23,6 +23,7 @@ APP_PUBKEY = ""
 @click.option("--irc-nick", default="boostirc")
 @click.option("--irc-channel", default="#boostirc")
 @click.option("--irc-realname", default="Boost IRC Bot")
+@click.option("--irc-nick-password")
 @click.pass_context
 def cli(
     ctx,
@@ -34,6 +35,7 @@ def cli(
     irc_port,
     irc_ssl,
     irc_nick,
+    irc_nick_password,
     irc_channel,
     irc_realname,
 ):
@@ -65,6 +67,9 @@ def cli(
         # Cancel whichever waiter's event didn't come in.
         for future in pending:
             future.cancel()
+
+        if irc_nick_password:
+            bot.send("PRIVMSG", target="NickServ", message=f"IDENTIFY {irc_nick_password}")
 
         bot.send("JOIN", channel=irc_channel)
 
