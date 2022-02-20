@@ -21,7 +21,7 @@ APP_PUBKEY = ""
 @click.option("--irc-port", type=int, default=6697)
 @click.option("--irc-ssl", type=bool, default=True)
 @click.option("--irc-nick", default="boostirc")
-@click.option("--irc-channel", default="#boostirc")
+@click.option("--irc-channel", default=["#boostirc"], multiple=True)
 @click.option("--irc-realname", default="Boost IRC Bot")
 @click.option("--irc-nick-password")
 @click.pass_context
@@ -69,9 +69,12 @@ def cli(
             future.cancel()
 
         if irc_nick_password:
-            bot.send("PRIVMSG", target="NickServ", message=f"IDENTIFY {irc_nick_password}")
+            bot.send(
+                "PRIVMSG", target="NickServ", message=f"IDENTIFY {irc_nick_password}"
+            )
 
-        bot.send("JOIN", channel=irc_channel)
+        for channel in irc_channel:
+            bot.send("JOIN", channel=channel)
 
     @bot.on("PING")
     def keepalive(message, **kwargs):
@@ -125,7 +128,8 @@ def cli(
                     message = f"{numerology}{podcast}{sender} boosted {amount}{message}{episode}{timestamp}{app}"
 
                     click.echo(message)
-                    bot.send("PRIVMSG", target=irc_channel, message=message)
+                    for channel in irc_channel:
+                        bot.send("PRIVMSG", target=channel, message=message)
 
                 except Exception as exception:
                     click.echo(exception)
