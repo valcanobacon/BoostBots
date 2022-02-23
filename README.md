@@ -20,19 +20,26 @@ boostirc \
     --irc-nick boostirc
 ```
 
+## Raspiblitz
+
+```sh
+
+ --lnd-tlscert /mnt/hdd/app-data/lnd/tls.cert --lnd-macaroon /mnt/hdd/app-data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
+ ```
+
 # Numerology
 
 | Sats | Emoji | Description |
 | - | - | - |
+| 10 | 🎳 | Bowler Donation X3 +🦃 |
 | 21 | 🪙 | Bitcoin donation|
 | 33 | ✨ | Magic Number Donation|
 | 69 | 💋 | Swasslenuff Donation  |
 | 73 | 👋 | Greetings Donation  |
 | 88 | 🥰 | Love and Kisses Donation  |
-| 420 | 🌱 | Stoner Donation |
+| 420 | ✌👽💨 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
 | 1776 | 🇺🇸 | America Fuck Yeah Donation |
-| 2695 | 🎳 | Bowler Donation |
 | 6006 | 🎱🎱 | Boobs Donation |
 | 8008 | 🎱🎱 | Boobs Donation |
 | 9653 | 🐺 | Wolf Donation |
@@ -46,8 +53,8 @@ You can combine numbers, order matters!
 | 6969 | 💋💋 | Double Kiss Donation|
 | 3369 | ✨💋 | Magic Kiss Donation |
 | 6933 | 💋✨ | Kiss Magic Donation |
-| 10420 | 🌱🔥 | Lit Stoner Donation|
-| 33420 | ✨🌱🔥 | Magic Lit Stoner Donation|
+| 10420 | ✌👽💨🔥 | Lit Stoner Donation|
+| 33420 | ✨✌👽💨🔥 | Magic Lit Stoner Donation|
 | 22222 | 🦆🦆🦆🦆🦆🔥 | Lit Ducks in a row Donation | 
 | 69133 | 💋✨🔥🔥 | Double Lit Magic Kiss Donation |
 | 699653 | 💋🐺🔥🔥🔥 | Kiss Wolf Triple Lit Donation|
