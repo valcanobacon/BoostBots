@@ -124,6 +124,8 @@ def cli(
                     amount = f"\x02{value}\x02 sats "  # trailing space
 
                     numerology = number_to_numerology(value)
+                    if numerology:
+                        numerology += " "
 
                     message = f"{numerology}{podcast}{episode}{sender} boosted {amount}{message}{timestamp}{app}"
 
@@ -144,15 +146,16 @@ def cli(
 def number_to_numerology(number: int) -> str:
     results = []
 
-    regex = r"10|21|33|69|73|88|420|666|1776|2695|9653|[68]00[68]|^2+$"
+    regex = r"(?:10)+|21|33|69|73|88|420|666|1776|9653|[68]00[68]|^2+$"
 
     matches = re.findall(regex, str(number))
 
     for match in matches:
 
-        if match == "10":
-            results.append("🎳")
-            if len(results) >= 3 and results[-3] == results[-2] == results[-1] == "🎳":
+        if re.search(r"(?:10)+", match):
+            for _ in range(len(match) // 2):
+                results.append("🎳")
+            for _ in range(len(match) // 2 - 3 + 1):
                 results.append("🦃")
 
         if match == "21":
@@ -205,7 +208,7 @@ def number_to_numerology(number: int) -> str:
     if not results:
         return ""
 
-    return "".join(results) + " "
+    return "".join(results)
 
 
 if __name__ == "__main__":
