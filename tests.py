@@ -60,6 +60,8 @@ def test_devil_donation():
 def test_america_donation():
     assert number_to_numerology(1776) == "🇺🇸"
 
+def test_canada_donation():
+    assert number_to_numerology(1867) == "🇨🇦"
 
 def test_wolf_donation():
     assert number_to_numerology(9653) == "🐺"

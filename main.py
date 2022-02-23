@@ -146,16 +146,16 @@ def cli(
 def number_to_numerology(number: int) -> str:
     results = []
 
-    regex = r"(?:10)+|21|33|69|73|88|420|666|1776|9653|[68]00[68]|^2+$"
+    regex = r"(?:10)+|21|33|69|73|88|420|666|1776|1867|9653|[68]00[68]|^2+$"
 
     matches = re.findall(regex, str(number))
 
     for match in matches:
 
         if re.search(r"(?:10)+", match):
-            for _ in range(len(match) // 2):
+            for _ in range(len(match)//2):
                 results.append("🎳")
-            for _ in range(len(match) // 2 - 3 + 1):
+            for _ in range(len(match)//2-3+1):
                 results.append("🦃")
 
         if match == "21":
@@ -181,6 +181,9 @@ def number_to_numerology(number: int) -> str:
 
         if match == "1776":
             results.append("🇺🇸")
+
+        if match == "1867":
+            results.append("🇨🇦")
 
         if match == "9653":
             results.append("🐺")

@@ -40,6 +40,7 @@ boostirc \
 | 420 | ✌👽💨 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
 | 1776 | 🇺🇸 | America Fuck Yeah Donation |
+| 1867 | 🇨🇦 | Canada Donation |
 | 6006 | 🎱🎱 | Boobs Donation |
 | 8008 | 🎱🎱 | Boobs Donation |
 | 9653 | 🐺 | Wolf Donation |
@@ -57,6 +58,7 @@ You can combine numbers, order matters!
 | 33420 | ✨✌👽💨🔥 | Magic Lit Stoner Donation|
 | 22222 | 🦆🦆🦆🦆🦆🔥 | Lit Ducks in a row Donation | 
 | 69133 | 💋✨🔥🔥 | Double Lit Magic Kiss Donation |
+| 101010 | 🎳🎳🎳🦃🔥🔥🔥 | Turkey Donation |
 | 699653 | 💋🐺🔥🔥🔥 | Kiss Wolf Triple Lit Donation|
 | 696969 | 💋💋💋🔥🔥🔥 | Triple Kiss Triple Lit Donation|
 | 698008 | 💋🎱🎱🔥🔥🔥 | Kiss Boobs Triple Lit Donation|
