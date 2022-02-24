@@ -1,11 +1,13 @@
 import asyncio
 import datetime
 import json
-import re
+import logging
 
 import bottom
 import click
 from lndgrpc import AsyncLNDClient
+
+from ..numerology import number_to_numerology
 
 APP_PUBKEY = ""
 
@@ -24,6 +26,7 @@ APP_PUBKEY = ""
 @click.option("--irc-channel", default=["#boostirc"], multiple=True)
 @click.option("--irc-realname", default="Boost IRC Bot")
 @click.option("--irc-nick-password")
+@click.option("--minimum-donation", type=int)
 @click.pass_context
 def cli(
     ctx,
@@ -38,6 +41,7 @@ def cli(
     irc_nick_password,
     irc_channel,
     irc_realname,
+    minimum_donation,
 ):
     ctx.ensure_object(dict)
 
@@ -94,6 +98,14 @@ def cli(
                     if "action" not in data or str(data["action"]).lower() != "boost":
                         continue
 
+                    value = int(data.get("value_msat_total", 0)) // 1000
+                    if not value:
+                        value = invoice.value
+
+                    if minimum_donation is not None and value < minimum_donation:
+                        logging.debug("Donation too low, skipping", data)
+                        continue
+
                     app = "via {}".format(data.get("app_name", "Unknown"))
 
                     sender = data.get("sender_name", "Anonymous")
@@ -118,9 +130,6 @@ def cli(
                             datetime.timedelta(seconds=int(data["ts"]))
                         )  # trailing space
 
-                    value = int(data.get("value_msat_total", 0)) // 1000
-                    if not value:
-                        value = invoice.value
                     amount = f"\x02{value}\x02 sats "  # trailing space
 
                     numerology = number_to_numerology(value)
@@ -141,78 +150,3 @@ def cli(
     bot.loop.run_until_complete(subscribe_invoices())
 
     bot.loop.run_forever()
-
-
-def number_to_numerology(number: int) -> str:
-    results = []
-
-    regex = r"(?:10)+|21|33|69|73|88|420|666|1776|1867|9653|[68]00[68]|^2+$"
-
-    matches = re.findall(regex, str(number))
-
-    for match in matches:
-
-        if re.search(r"(?:10)+", match):
-            for _ in range(len(match)//2):
-                results.append("🎳")
-            for _ in range(len(match)//2-3+1):
-                results.append("🦃")
-
-        if match == "21":
-            results.append("🪙")
-
-        if match == "33":
-            results.append("✨")
-
-        if match == "69":
-            results.append("💋")
-
-        if match == "73":
-            results.append("👋")
-
-        if match == "88":
-            results.append("🥰")
-
-        if match == "420":
-            results.append("✌👽💨")
-
-        if match == "666":
-            results.append("😈")
-
-        if match == "1776":
-            results.append("🇺🇸")
-
-        if match == "1867":
-            results.append("🇨🇦")
-
-        if match == "9653":
-            results.append("🐺")
-
-        if re.search(r"[68]00[68]", match):
-            results.append("🎱")
-            results.append("🎱")
-
-        if re.search(r"^2+$", match):
-            for _ in range(len(match)):
-                results.append("🦆")
-
-    if number >= 100000:
-        results.append("🔥")
-
-    if number >= 50000:
-        results.append("🔥")
-
-    if number >= 10000:
-        results.append("🔥")
-
-    if number < 10:
-        results.append("💩")
-
-    if not results:
-        return ""
-
-    return "".join(results)
-
-
-if __name__ == "__main__":
-    cli()

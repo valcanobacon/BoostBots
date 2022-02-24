@@ -12,19 +12,21 @@ setup(
     packages=find_packages(include=["src", "src.*"]),
     entry_points={
         "console_scripts": [
-            "boostirc=main:cli",
+            "boostirc=src.irc:cli",
+            "boostodon=src.mastodon:cli",
         ],
     },
     install_requires=[
         "lnd-grpc-client<1,>=0.3.39",
-        "bottom<3,>=2.2.0",
         "click<9,>=8.0.3",
-    ],
-    dependency_links=[
-        "git+https://github.com/valcanobacon/lnd-grpc-client@fix-subscribe-invoices",
-
     ],
     extras_require={
         "tests": ["pytest>=6.2.5,<7"],
+        "irc": [
+            "bottom<3,>=2.2.0",
+        ],
+        "mastodon": [
+              'atoot @ git+https://git@github.com/valcanobacon/atoot@1.0.2#egg=atoot',
+        ],
     },
 )
