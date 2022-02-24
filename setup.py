@@ -20,16 +20,13 @@ setup(
         "lnd-grpc-client<1,>=0.3.39",
         "click<9,>=8.0.3",
     ],
-    dependency_links=[
-        "git+https://github.com/valcanobacon/lnd-grpc-client@fix-subscribe-invoices",
-
-    ],
     extras_require={
         "tests": ["pytest>=6.2.5,<7"],
         "irc": [
             "bottom<3,>=2.2.0",
         ],
         "mastodon": [
+              'atoot @ git+https://git@github.com/valcanobacon/atoot@1.0.2#egg=atoot',
         ],
     },
 )
