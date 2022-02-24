@@ -1,6 +1,6 @@
 import pytest
 
-from main import number_to_numerology
+from src.numerology import number_to_numerology
 
 
 def test_bowler_donations():

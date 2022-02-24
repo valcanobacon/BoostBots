@@ -12,12 +12,11 @@ setup(
     packages=find_packages(include=["src", "src.*"]),
     entry_points={
         "console_scripts": [
-            "boostirc=main:cli",
+            "boostirc=src.irc:cli",
         ],
     },
     install_requires=[
         "lnd-grpc-client<1,>=0.3.39",
-        "bottom<3,>=2.2.0",
         "click<9,>=8.0.3",
     ],
     dependency_links=[
@@ -26,5 +25,8 @@ setup(
     ],
     extras_require={
         "tests": ["pytest>=6.2.5,<7"],
+        "irc": [
+            "bottom<3,>=2.2.0",
+        ],
     },
 )
