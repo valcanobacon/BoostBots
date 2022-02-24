@@ -26,6 +26,7 @@ def async_cmd(func):
 @click.option("--lnd-tlscert", type=click.Path(exists=True), default="tls.cert")
 @click.option("--mastodon-instance")
 @click.option("--mastodon-access-token")
+@click.option("--minimum-donation", type=int)
 @click.pass_context
 @async_cmd
 async def cli(
@@ -36,6 +37,7 @@ async def cli(
     lnd_tlscert,
     mastodon_instance,
     mastodon_access_token,
+    minimum_donation,
 ):
     ctx.ensure_object(dict)
 
@@ -65,11 +67,15 @@ async def cli(
                 if "action" not in data or str(data["action"]).lower() != "boost":
                     continue
 
-                sender = data.get("sender_name", "Anonymous")
-
                 value = int(data.get("value_msat_total", 0)) // 1000
                 if not value:
                     value = invoice.value
+
+                if value < minimum_donation:
+                    logging.debug("Donation too low, skipping", data)
+                    continue
+
+                sender = data.get("sender_name", "Anonymous")
 
                 numerology = number_to_numerology(value)
 

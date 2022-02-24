@@ -11,9 +11,9 @@ def number_to_numerology(number: int) -> str:
     for match in matches:
 
         if re.search(r"(?:10)+", match):
-            for _ in range(len(match)//2):
+            for _ in range(len(match) // 2):
                 results.append("🎳")
-            for _ in range(len(match)//2-3+1):
+            for _ in range(len(match) // 2 - 3 + 1):
                 results.append("🦃")
 
         if match == "21":

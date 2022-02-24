@@ -1,12 +1,13 @@
 import asyncio
 import datetime
 import json
-
-from ..numerology import number_to_numerology
+import logging
 
 import bottom
 import click
 from lndgrpc import AsyncLNDClient
+
+from ..numerology import number_to_numerology
 
 APP_PUBKEY = ""
 
@@ -25,6 +26,7 @@ APP_PUBKEY = ""
 @click.option("--irc-channel", default=["#boostirc"], multiple=True)
 @click.option("--irc-realname", default="Boost IRC Bot")
 @click.option("--irc-nick-password")
+@click.option("--minimum-donation", type=int)
 @click.pass_context
 def cli(
     ctx,
@@ -39,6 +41,7 @@ def cli(
     irc_nick_password,
     irc_channel,
     irc_realname,
+    minimum_donation,
 ):
     ctx.ensure_object(dict)
 
@@ -95,6 +98,14 @@ def cli(
                     if "action" not in data or str(data["action"]).lower() != "boost":
                         continue
 
+                    value = int(data.get("value_msat_total", 0)) // 1000
+                    if not value:
+                        value = invoice.value
+
+                    if minimum_donation is not None and value < minimum_donation:
+                        logging.debug("Donation too low, skipping", data)
+                        continue
+
                     app = "via {}".format(data.get("app_name", "Unknown"))
 
                     sender = data.get("sender_name", "Anonymous")
@@ -119,9 +130,6 @@ def cli(
                             datetime.timedelta(seconds=int(data["ts"]))
                         )  # trailing space
 
-                    value = int(data.get("value_msat_total", 0)) // 1000
-                    if not value:
-                        value = invoice.value
                     amount = f"\x02{value}\x02 sats "  # trailing space
 
                     numerology = number_to_numerology(value)
