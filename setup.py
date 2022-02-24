@@ -13,6 +13,7 @@ setup(
     entry_points={
         "console_scripts": [
             "boostirc=src.irc:cli",
+            "boostodon=src.mastodon:cli",
         ],
     },
     install_requires=[
@@ -27,6 +28,8 @@ setup(
         "tests": ["pytest>=6.2.5,<7"],
         "irc": [
             "bottom<3,>=2.2.0",
+        ],
+        "mastodon": [
         ],
     },
 )

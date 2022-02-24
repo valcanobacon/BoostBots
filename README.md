@@ -1,30 +1,41 @@
-# BoostIRC
+# BoostBots
 
-## Quick Start
+## BoostIRC
+
+### Quick Start
 
 ```sh
 git clone https://github.com/valcanobacon/BoostIRC.git
-cd BoostIRC
+cd BoostBots
 
 # Install dependencies
 python3 -m venv venv
 source venv/bin/activate
-pip install -e .
+pip install -e '.[irc]'
 
-boostirc \
-    --lnd-host REDACTED.m.voltageapp.io \
-    --lnd-macaroon ./admin.macaroon \
-    --lnd-tlscert ./tls.cert \
-    --irc-host irc.zeronode.net \
-    --irc-port 6697 \
-    --irc-nick boostirc
+boostirc 
+```
+
+## Boostodon (Mastodon Bot)
+
+### Quick Start
+
+```sh
+git clone https://github.com/valcanobacon/BoostIRC.git
+cd BoostBots
+
+# Install dependencies
+python3 -m venv venv
+source venv/bin/activate
+pip install -e '.[mastodon]'
+
+boostodon
 ```
 
 ## Raspiblitz
 
 ```sh
-
- --lnd-tlscert /mnt/hdd/app-data/lnd/tls.cert --lnd-macaroon /mnt/hdd/app-data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
+--lnd-tlscert /mnt/hdd/app-data/lnd/tls.cert --lnd-macaroon /mnt/hdd/app-data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
  ```
 
 # Numerology
