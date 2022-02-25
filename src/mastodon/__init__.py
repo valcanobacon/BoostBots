@@ -71,7 +71,7 @@ async def cli(
                 if not value:
                     value = invoice.value
 
-                if value < minimum_donation:
+                if minimum_donation is not None and value < minimum_donation:
                     logging.debug("Donation too low, skipping", data)
                     continue
 

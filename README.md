@@ -5,7 +5,7 @@
 ### Quick Start
 
 ```sh
-git clone https://github.com/valcanobacon/BoostIRC.git
+git clone https://github.com/valcanobacon/BoostBots.git
 cd BoostBots
 
 # Install dependencies
@@ -21,7 +21,7 @@ boostirc
 ### Quick Start
 
 ```sh
-git clone https://github.com/valcanobacon/BoostIRC.git
+git clone https://github.com/valcanobacon/BoostBots.git
 cd BoostBots
 
 # Install dependencies
@@ -30,6 +30,22 @@ source venv/bin/activate
 pip install -e '.[mastodon]'
 
 boostodon
+```
+
+## Boostrix (Matrix Bot)
+
+### Quick Start
+
+```sh
+git clone https://github.com/valcanobacon/BoostBots.git
+cd BoostBots
+
+# Install dependencies
+python3 -m venv venv
+source venv/bin/activate
+pip install -e '.[matrix]'
+
+boostrix
 ```
 
 ## Raspiblitz

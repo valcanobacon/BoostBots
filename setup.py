@@ -4,16 +4,17 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="BoostIRC",
-    version="0.1.0",
+    name="BoostBots",
+    version="0.2.0",
     python_requires=">=3.9",
-    description="Boost IRC",
+    description="Boost Bots",
     author_email="boostaccount.w0v3n@aleeas.com",
     packages=find_packages(include=["src", "src.*"]),
     entry_points={
         "console_scripts": [
             "boostirc=src.irc:cli",
             "boostodon=src.mastodon:cli",
+            "boostrix=src.matrix:cli",
         ],
     },
     install_requires=[
@@ -27,6 +28,9 @@ setup(
         ],
         "mastodon": [
               'atoot @ git+https://git@github.com/valcanobacon/atoot@1.0.2#egg=atoot',
+        ],
+        "matrix": [
+            "matrix-nio<1,>=0.19.0",
         ],
     },
 )
