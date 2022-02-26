@@ -1,5 +1,7 @@
 # BoostBots
 
+[![Tests](https://github.com/valcanobacon/BoostBots/actions/workflows/ci.yml/badge.svg)](https://github.com/valcanobacon/BoostBots/actions/workflows/ci.yml)
+
 ## BoostIRC
 
 ### Quick Start
