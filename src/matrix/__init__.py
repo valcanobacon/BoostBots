@@ -90,7 +90,7 @@ async def cli(
                     logging.debug("Donation too low, skipping", data)
                     continue
 
-                message = new_message(data, value)
+                message = _new_message(data, value)
                 logging.debug(message)
 
                 # Send the data to each room
@@ -111,28 +111,30 @@ async def cli(
                 logging.exception("error")
 
 
-def new_message(data, value):
-    def get(data, key, format_found=None, default=None):
-        if key in data:
-            value = data[key]
-            if value:
-                if format_found is None:
-                    return value
-                if callable(format_found):
-                    return format_found(key, value)
-                return format_found.format(**{key: value})
-        return default
+def _get(data, key, format_found=None, default=None):
+    if key in data:
+        value = data[key]
+        if value:
+            if format_found is None:
+                return value
+            if callable(format_found):
+                return format_found(key, value)
+            return format_found.format(**{key: value})
+    return default
+
+
+def _new_message(data, value, numerology_func=number_to_numerology):
 
     amount = f"{value} sats"
 
-    sender = get(data, "sender_name", default="Anonymous")
-    podcast = get(data, "podcast", "[{podcast}]")
-    episode = get(data, "episode", "[{episode}]")
-    message = get(data, "message", 'saying "{message}"')
-    app = get(data, "app_name", "via {app_name}")
-    timestamp = get(data, "ts", lambda _, v: "@ {}".format(timedelta(seconds=int(v))))
+    sender = _get(data, "sender_name", default="Anonymous")
+    podcast = _get(data, "podcast", "[{podcast}]")
+    episode = _get(data, "episode", "[{episode}]")
+    message = _get(data, "message", 'saying "{message}"')
+    app = _get(data, "app_name", "via {app_name}")
+    timestamp = _get(data, "ts", lambda _, v: "@{}".format(timedelta(seconds=int(v))))
 
-    numerology = number_to_numerology(value)
+    numerology = numerology_func(value)
 
     # Build the data to send to Matrix
     data = ""
