@@ -1,7 +1,7 @@
 import asyncio
-import datetime
 import json
 import logging
+from datetime import timedelta
 
 import bottom
 import click
@@ -106,39 +106,9 @@ def cli(
                         logging.debug("Donation too low, skipping", data)
                         continue
 
-                    app = "via {}".format(data.get("app_name", "Unknown"))
+                    message = _new_message(data, value)
+                    logging.debug(message)
 
-                    sender = data.get("sender_name", "Anonymous")
-
-                    podcast = ""
-                    if "podcast" in data and data["podcast"]:
-                        podcast = f"\x02[{data['podcast']}]\x02 "  # trailing space
-
-                    episode = ""
-                    if "episode" in data and data["episode"]:
-                        episode = f"\x02[{data['episode']}]\x02 "  # trailing space
-
-                    message = ""
-                    if "message" in data and data["message"]:
-                        message = (
-                            f"saying \"\x02{data['message']}\x02\" "  # trailing space
-                        )
-
-                    timestamp = ""
-                    if "ts" in data and data["ts"]:
-                        timestamp = "@ {} ".format(
-                            datetime.timedelta(seconds=int(data["ts"]))
-                        )  # trailing space
-
-                    amount = f"\x02{value}\x02 sats "  # trailing space
-
-                    numerology = number_to_numerology(value)
-                    if numerology:
-                        numerology += " "
-
-                    message = f"{numerology}{podcast}{episode}{sender} boosted {amount}{message}{timestamp}{app}"
-
-                    click.echo(message)
                     for channel in irc_channel:
                         bot.send("PRIVMSG", target=channel, message=message)
 
@@ -150,3 +120,47 @@ def cli(
     bot.loop.run_until_complete(subscribe_invoices())
 
     bot.loop.run_forever()
+
+
+def _get(data, key, format_found=None, default=None):
+    if key in data:
+        value = data[key]
+        if value:
+            if format_found is None:
+                return value
+            if callable(format_found):
+                return format_found(key, value)
+            return format_found.format(**{key: value})
+    return default
+
+
+def _new_message(data, value, numerology_func=number_to_numerology):
+
+    amount = f"\x02\u200b{value}\x02 sats"
+    app = _get(data, "app_name", "via {app_name}")
+    sender = _get(data, "sender_name", default="Anonymous")
+    podcast = _get(data, "podcast", "\x02[{podcast}]\x02")
+    episode = _get(data, "episode", "\x02[{episode}]\x02")
+    message = _get(data, "message", 'saying "\x02{message}\x02"')
+    timestamp = _get(data, "ts", lambda _, v: "@{}".format(timedelta(seconds=int(v))))
+    numerology = numerology_func(value)
+
+    # Build the data to send to Matrix
+    data = ""
+    if numerology:
+        data += numerology + " "
+    if podcast:
+        data += podcast + " "
+    if episode:
+        data += episode + " "
+    if sender:
+        data += sender + " "
+    data += f"boosted {amount}"
+    if message:
+        data += " " + message
+    if timestamp:
+        data += " " + timestamp
+    if app:
+        data += " " + app
+
+    return data
