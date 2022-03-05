@@ -27,6 +27,7 @@ def async_cmd(func):
 @click.option("--mastodon-instance")
 @click.option("--mastodon-access-token")
 @click.option("--minimum-donation", type=int)
+@click.option("--allowed-name", multiple=True)
 @click.pass_context
 @async_cmd
 async def cli(
@@ -38,6 +39,7 @@ async def cli(
     mastodon_instance,
     mastodon_access_token,
     minimum_donation,
+    allowed_name,
 ):
     ctx.ensure_object(dict)
 
@@ -66,6 +68,14 @@ async def cli(
 
                 if "action" not in data or str(data["action"]).lower() != "boost":
                     continue
+
+                if allowed_name:
+                    name = data.get("name")
+                    if not name:
+                        continue
+
+                    if name.lower() not in [x.lower() for x in allowed_name]:
+                        continue
 
                 value = int(data.get("value_msat_total", 0)) // 1000
                 if not value:
