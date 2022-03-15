@@ -1,4 +1,7 @@
+import math
 import re
+
+PI = str(math.pi).replace(".", "")
 
 
 def number_to_numerology(number: int) -> str:
@@ -6,7 +9,9 @@ def number_to_numerology(number: int) -> str:
 
     regex = r"(?:10)+|21|33|69|73|88|420|666|1776|1867|9653|[68]00[68]|^2+$"
 
-    matches = re.findall(regex, str(number))
+    number_str = str(number)
+
+    matches = re.findall(regex, number_str)
 
     for match in matches:
 
@@ -53,6 +58,10 @@ def number_to_numerology(number: int) -> str:
         if re.search(r"^2+$", match):
             for _ in range(len(match)):
                 results.append("🦆")
+
+    if PI[: len(number_str)] == number_str:
+        for _ in range(len(number_str) - 2):
+            results.append("🥧")
 
     if number >= 100000:
         results.append("🔥")

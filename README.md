@@ -66,6 +66,7 @@ boostrix
 | 69 | 💋 | Swasslenuff Donation  |
 | 73 | 👋 | Greetings Donation  |
 | 88 | 🥰 | Love and Kisses Donation  |
+| 314 | 🥧 | Pi Donation |
 | 420 | ✌👽💨 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
 | 1776 | 🇺🇸 | America Fuck Yeah Donation |
@@ -84,6 +85,7 @@ You can combine numbers, order matters!
 | 3369 | ✨💋 | Magic Kiss Donation |
 | 6933 | 💋✨ | Kiss Magic Donation |
 | 10420 | ✌👽💨🔥 | Lit Stoner Donation|
+| 31415 | 🥧🥧🥧🔥 | Lit Pi Donation|
 | 33420 | ✨✌👽💨🔥 | Magic Lit Stoner Donation|
 | 22222 | 🦆🦆🦆🦆🦆🔥 | Lit Ducks in a row Donation | 
 | 69133 | 💋✨🔥🔥 | Double Lit Magic Kiss Donation |

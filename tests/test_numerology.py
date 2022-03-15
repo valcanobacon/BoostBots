@@ -69,6 +69,14 @@ def test_wolf_donation():
     assert number_to_numerology(9653) == "🐺"
 
 
+def test_pi_donation():
+    assert number_to_numerology(314) == "🥧"
+    assert number_to_numerology(3141) == "🥧🥧"
+    assert number_to_numerology(31415) == "🥧🥧🥧🔥"
+    assert number_to_numerology(314159) == "🥧🥧🥧🥧🔥🔥🔥"
+    assert number_to_numerology(3141592) == "🥧🥧🥧🥧🥧🔥🔥🔥"
+
+
 def test_combinations():
     assert number_to_numerology(2169) == "🪙💋"
     assert number_to_numerology(6921) == "💋🪙"
