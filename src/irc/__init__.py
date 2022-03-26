@@ -22,6 +22,7 @@ APP_PUBKEY = ""
 @click.option("--irc-host", default="irc.zeronode.net")
 @click.option("--irc-port", type=int, default=6697)
 @click.option("--irc-ssl", type=bool, default=True)
+@click.option("--irc-password")
 @click.option("--irc-nick", default="boostirc")
 @click.option("--irc-channel", default=["#boostirc"], multiple=True)
 @click.option("--irc-realname", default="Boost IRC Bot")
@@ -37,6 +38,7 @@ def cli(
     irc_host,
     irc_port,
     irc_ssl,
+    irc_password,
     irc_nick,
     irc_nick_password,
     irc_channel,
@@ -57,6 +59,8 @@ def cli(
     async def connect(**kwargs):
         bot.send("NICK", nick=irc_nick)
         bot.send("USER", user=irc_nick, realname=irc_realname)
+        if irc_password is not None:
+            bot.send("PASS", password=irc_password)
 
         # Don't try to join channels until the server has
         # sent the MOTD, or signaled that there's no MOTD.
