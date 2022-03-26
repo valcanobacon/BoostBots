@@ -59,8 +59,8 @@ def cli(
     async def connect(**kwargs):
         bot.send("NICK", nick=irc_nick)
         bot.send("USER", user=irc_nick, realname=irc_realname)
-if irc_password is not None:
-        bot.send("PASS", password=irc_password)
+        if irc_password is not None:
+            bot.send("PASS", password=irc_password)
 
         # Don't try to join channels until the server has
         # sent the MOTD, or signaled that there's no MOTD.
