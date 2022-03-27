@@ -140,8 +140,10 @@ def _get(data, key, format_found=None, default=None):
 
 
 def _sanitize(message):
-    # for IRC
-    return message.replace("\n", "")
+    # for IRC TODO: check for and replace more than just newlines
+    if isinstance(message, str):
+        return message.replace("\n", "")
+    return message
 
 
 def _new_message(data, value, numerology_func=number_to_numerology):
