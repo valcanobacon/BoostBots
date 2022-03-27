@@ -138,6 +138,11 @@ def _get(data, key, format_found=None, default=None):
     return default
 
 
+def _sanitize(message):
+    # for IRC
+    return message.replace("\n", "")
+
+
 def _new_message(data, value, numerology_func=number_to_numerology):
 
     amount = f"\x02\u200b{value}\x02 sats"
@@ -146,6 +151,7 @@ def _new_message(data, value, numerology_func=number_to_numerology):
     podcast = _get(data, "podcast", "\x02[{podcast}]\x02")
     episode = _get(data, "episode", "\x02[{episode}]\x02")
     message = _get(data, "message", 'saying "\x02{message}\x02"')
+    message = _sanitize(message)
     timestamp = _get(data, "ts", lambda _, v: "@{}".format(timedelta(seconds=int(v))))
     numerology = numerology_func(value)
 
