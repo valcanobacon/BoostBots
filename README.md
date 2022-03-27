@@ -67,6 +67,7 @@ boostrix
 | 73 | 👋 | Greetings Donation  |
 | 88 | 🥰 | Love and Kisses Donation  |
 | 314 | 🥧 | Pi Donation |
+| 321 | 💥 | Countdown Donation |
 | 420 | ✌👽💨 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
 | 1776 | 🇺🇸 | America Fuck Yeah Donation |
@@ -112,6 +113,16 @@ Any sequence of PI of at least 3 characters gets you 🥧.
 | 314 | 🥧 |
 | 3141 | 🥧🥧 |
 | 31415 | 🥧🥧🥧🔥 |
+
+## Countdown Donation
+Any Countdown of at least 3 characters gets you 💥.
+4 characters is double, 5 characters is triple, ...
+
+| Sats | Emoji |
+| - | - |
+| 321 | 💥 |
+| 4321 | 💥💥 |
+| 54321 | 💥💥💥🔥 |
 
 ## Lit Donations
 

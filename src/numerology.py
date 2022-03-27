@@ -2,11 +2,16 @@ import math
 import re
 
 PI = str(math.pi).replace(".", "")
-
 PI_REGEX_PATTERN = "|".join(PI[:x] for x in range(len(PI) + 1, 3 - 1, -1))
+
+COUNTDOWN = "987654321"
+COUNTDOWN_REGEX_PATTEN = "|".join(
+    COUNTDOWN[-n:] for n in range(len(COUNTDOWN), 3 - 1, -1)
+)
 
 REGEX_PATTEN = "|".join(
     (
+        COUNTDOWN_REGEX_PATTEN,
         r"(?:10)+|21|33|69|73|88|420|666|1776|1867|9653|[68]00[68]|^2+$",
         PI_REGEX_PATTERN,
     )
@@ -71,6 +76,10 @@ def number_to_numerology(number: int) -> str:
         if re.search(PI_REGEX_PATTERN, match):
             for _ in range(len(match) - 2):
                 results.append("🥧")
+
+        if re.search(COUNTDOWN_REGEX_PATTEN, match):
+            for _ in range(len(match) - 2):
+                results.append("💥")
 
     if number >= 100000:
         results.append("🔥")

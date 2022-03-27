@@ -80,6 +80,16 @@ def test_pi_donation():
     assert number_to_numerology(3142) == "🥧"
 
 
+def test_countdown_donation():
+    assert number_to_numerology(321) == "💥"
+    assert number_to_numerology(4321) == "💥💥"
+    assert number_to_numerology(54321) == "💥💥💥🔥🔥"
+    assert number_to_numerology(654321) == "💥💥💥💥🔥🔥🔥"
+    assert number_to_numerology(7654321) == "💥💥💥💥💥🔥🔥🔥"
+    assert number_to_numerology(87654321) == "💥💥💥💥💥💥🔥🔥🔥"
+    assert number_to_numerology(987654321) == "💥💥💥💥💥💥💥🔥🔥🔥"
+
+
 def test_combinations():
     assert number_to_numerology(2169) == "🪙💋"
     assert number_to_numerology(6921) == "💋🪙"
@@ -93,3 +103,5 @@ def test_combinations():
     assert number_to_numerology(8873) == "🥰👋"
     assert number_to_numerology(31433) == "🥧✨🔥"
     assert number_to_numerology(69314) == "💋🥧🔥🔥"
+    assert number_to_numerology(10321) == "🎳💥🔥"
+    assert number_to_numerology(32121) == "💥🪙🔥"
