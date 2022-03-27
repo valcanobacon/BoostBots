@@ -28,6 +28,12 @@ def test_ducksinarow_donations():
     assert number_to_numerology(2222222) == "🦆🦆🦆🦆🦆🦆🦆🔥🔥🔥"
 
 
+def test_dice_donations():
+    assert number_to_numerology(11) == "🎲"
+    assert number_to_numerology(1111) == "🎲🎲"
+    assert number_to_numerology(111111) == "🎲🎲🎲🔥🔥🔥"
+
+
 def test_bitcoin_donations():
     assert number_to_numerology(21) == "🪙"
     assert number_to_numerology(2121) == "🪙🪙"
@@ -75,6 +81,19 @@ def test_pi_donation():
     assert number_to_numerology(31415) == "🥧🥧🥧🔥"
     assert number_to_numerology(314159) == "🥧🥧🥧🥧🔥🔥🔥"
     assert number_to_numerology(3141592) == "🥧🥧🥧🥧🥧🔥🔥🔥"
+    assert number_to_numerology(314314) == "🥧🥧🔥🔥🔥"
+    assert number_to_numerology(1314) == "🥧"
+    assert number_to_numerology(3142) == "🥧"
+
+
+def test_countdown_donation():
+    assert number_to_numerology(321) == "💥"
+    assert number_to_numerology(4321) == "💥💥"
+    assert number_to_numerology(54321) == "💥💥💥🔥🔥"
+    assert number_to_numerology(654321) == "💥💥💥💥🔥🔥🔥"
+    assert number_to_numerology(7654321) == "💥💥💥💥💥🔥🔥🔥"
+    assert number_to_numerology(87654321) == "💥💥💥💥💥💥🔥🔥🔥"
+    assert number_to_numerology(987654321) == "💥💥💥💥💥💥💥🔥🔥🔥"
 
 
 def test_combinations():
@@ -83,8 +102,13 @@ def test_combinations():
     assert number_to_numerology(3369) == "✨💋"
     assert number_to_numerology(6933) == "💋✨"
     assert number_to_numerology(1021) == "🎳🪙"
+    assert number_to_numerology(1011) == "🎳🎲"
     assert number_to_numerology(2110) == "🪙🎳"
     assert number_to_numerology(1069) == "🎳💋"
     assert number_to_numerology(6910) == "💋🎳"
     assert number_to_numerology(7388) == "👋🥰"
     assert number_to_numerology(8873) == "🥰👋"
+    assert number_to_numerology(31433) == "🥧✨🔥"
+    assert number_to_numerology(69314) == "💋🥧🔥🔥"
+    assert number_to_numerology(10321) == "🎳💥🔥"
+    assert number_to_numerology(32121) == "💥🪙🔥"

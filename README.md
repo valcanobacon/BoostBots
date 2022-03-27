@@ -61,12 +61,14 @@ boostrix
 | Sats | Emoji | Description |
 | - | - | - |
 | 10 | 🎳 | Bowler Donation X3 +🦃 |
+| 11 | 🎲 | Dice Donation |
 | 21 | 🪙 | Bitcoin donation|
 | 33 | ✨ | Magic Number Donation|
 | 69 | 💋 | Swasslenuff Donation  |
 | 73 | 👋 | Greetings Donation  |
 | 88 | 🥰 | Love and Kisses Donation  |
 | 314 | 🥧 | Pi Donation |
+| 321 | 💥 | Countdown Donation |
 | 420 | ✌👽💨 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
 | 1776 | 🇺🇸 | America Fuck Yeah Donation |
@@ -102,6 +104,26 @@ If the value is all 2s then you get that many 🦆s
 | 22 | 🦆🦆 |
 | 222 | 🦆🦆🦆 |
 | 2222 |🦆🦆🦆🦆 |
+
+## Pi Donation
+Any sequence of PI of at least 3 characters gets you 🥧.
+4 characters is double pi, 5 characters is triple, ...
+
+| Sats | Emoji |
+| - | - |
+| 314 | 🥧 |
+| 3141 | 🥧🥧 |
+| 31415 | 🥧🥧🥧🔥 |
+
+## Countdown Donation
+Any Countdown of at least 3 characters gets you 💥.
+4 characters is double, 5 characters is triple, ...
+
+| Sats | Emoji |
+| - | - |
+| 321 | 💥 |
+| 4321 | 💥💥 |
+| 54321 | 💥💥💥🔥 |
 
 ## Lit Donations
 
