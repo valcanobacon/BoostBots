@@ -103,6 +103,16 @@ If the value is all 2s then you get that many 🦆s
 | 222 | 🦆🦆🦆 |
 | 2222 |🦆🦆🦆🦆 |
 
+## Pi Donation
+Any sequence of PI of at least 3 characters gets you 🥧.
+4 characters is double pi, 5 characters is triple, ...
+
+| Sats | Emoji |
+| - | - |
+| 314 | 🥧 |
+| 3141 | 🥧🥧 |
+| 31415 | 🥧🥧🥧🔥 |
+
 ## Lit Donations
 
 | Sats | Emoji |
