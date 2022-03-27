@@ -1,4 +1,5 @@
 import asyncio
+import codecs
 import json
 import logging
 from datetime import timedelta
@@ -145,9 +146,8 @@ def _sanitize(message):
         print(repr(message))
         if "\u" in message:
             message = (message.encode('utf-16', 'surrogatepass')
-                              .decode('utf-16')
-                              .encode('utf-8')
-                              .decode())
+                              .decode('utf-16'))
+            message = r"{}".format(message)
         return message.replace("\n", "")
     return message
 
