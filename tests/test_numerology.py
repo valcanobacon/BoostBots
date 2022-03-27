@@ -31,7 +31,7 @@ def test_ducksinarow_donations():
 def test_dice_donations():
     assert number_to_numerology(11) == "🎲"
     assert number_to_numerology(1111) == "🎲🎲"
-    assert number_to_numerology(111111) == "🎲🎲🎲🔥"
+    assert number_to_numerology(111111) == "🎲🎲🎲🔥🔥🔥"
 
 
 def test_bitcoin_donations():
