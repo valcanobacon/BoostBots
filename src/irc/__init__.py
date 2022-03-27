@@ -130,12 +130,26 @@ def _get(data, key, format_found=None, default=None):
     if key in data:
         value = data[key]
         if value:
+            value = _sanitize(value)
             if format_found is None:
                 return value
             if callable(format_found):
                 return format_found(key, value)
             return format_found.format(**{key: value})
     return default
+
+
+def _sanitize(message):
+    # for IRC TODO: check for and replace more than just newlines
+    if isinstance(message, str):
+        print(repr(message))
+        if "\u" in message:
+            message = (message.encode('utf-16', 'surrogatepass')
+                              .decode('utf-16')
+                              .encode('utf-8')
+                              .decode())
+        return message.replace("\n", "")
+    return message
 
 
 def _new_message(data, value, numerology_func=number_to_numerology):
