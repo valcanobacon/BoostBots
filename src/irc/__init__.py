@@ -143,11 +143,11 @@ def _get(data, key, format_found=None, default=None):
 def _sanitize(message):
     # for IRC TODO: check for and replace more than just newlines
     if isinstance(message, str):
-        print(repr(message))
-        # if "\u" in message:
-        #     message = (message.encode('utf-16', 'surrogatepass')
-        #                       .decode('utf-16'))
-        #     message = r"{}".format(message)
+        if r"\\u" in repr(message):
+            message = (message.encode('ascii')
+                              .decode('unicode-escape')
+                              .encode('utf-16', 'surrogatepass')
+                              .decode('utf-16'))
         return message.replace("\n", "")
     return message
 
