@@ -144,10 +144,12 @@ def _sanitize(message):
     # for IRC TODO: check for and replace more than just newlines
     if isinstance(message, str):
         if r"\\u" in repr(message):
-            message = (message.encode('ascii')
-                              .decode('unicode-escape')
-                              .encode('utf-16', 'surrogatepass')
-                              .decode('utf-16'))
+            message = (
+                message.encode("ascii")
+                .decode("unicode-escape")
+                .encode("utf-16", "surrogatepass")
+                .decode("utf-16")
+            )
         return message.replace("\n", "")
     return message
 
