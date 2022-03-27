@@ -28,6 +28,12 @@ def test_ducksinarow_donations():
     assert number_to_numerology(2222222) == "🦆🦆🦆🦆🦆🦆🦆🔥🔥🔥"
 
 
+def test_dice_donations():
+    assert number_to_numerology(11) == "🎲"
+    assert number_to_numerology(1111) == "🎲🎲"
+    assert number_to_numerology(111111) == "🎲🎲🎲🔥"
+
+
 def test_bitcoin_donations():
     assert number_to_numerology(21) == "🪙"
     assert number_to_numerology(2121) == "🪙🪙"
@@ -96,6 +102,7 @@ def test_combinations():
     assert number_to_numerology(3369) == "✨💋"
     assert number_to_numerology(6933) == "💋✨"
     assert number_to_numerology(1021) == "🎳🪙"
+    assert number_to_numerology(1011) == "🎳🎲"
     assert number_to_numerology(2110) == "🪙🎳"
     assert number_to_numerology(1069) == "🎳💋"
     assert number_to_numerology(6910) == "💋🎳"

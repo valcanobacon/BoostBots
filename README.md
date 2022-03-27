@@ -61,6 +61,7 @@ boostrix
 | Sats | Emoji | Description |
 | - | - | - |
 | 10 | 🎳 | Bowler Donation X3 +🦃 |
+| 11 | 🎲 | Dice Donation |
 | 21 | 🪙 | Bitcoin donation|
 | 33 | ✨ | Magic Number Donation|
 | 69 | 💋 | Swasslenuff Donation  |
