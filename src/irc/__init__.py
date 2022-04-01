@@ -131,7 +131,6 @@ def _get(data, key, format_found=None, default=None):
     if key in data:
         value = data[key]
         if value:
-            value = _sanitize(value)
             if format_found is None:
                 return value
             if callable(format_found):
