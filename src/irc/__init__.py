@@ -1,4 +1,5 @@
 import asyncio
+import codecs
 import json
 import logging
 from datetime import timedelta
@@ -136,6 +137,20 @@ def _get(data, key, format_found=None, default=None):
                 return format_found(key, value)
             return format_found.format(**{key: value})
     return default
+
+
+def _sanitize(message):
+    # for IRC TODO: check for and replace more than just newlines
+    if isinstance(message, str):
+        if r"\\u" in repr(message):
+            message = (
+                message.encode("ascii")
+                .decode("unicode-escape")
+                .encode("utf-16", "surrogatepass")
+                .decode("utf-16")
+            )
+        return message.replace("\n", "")
+    return message
 
 
 def _new_message(data, value, numerology_func=number_to_numerology):
