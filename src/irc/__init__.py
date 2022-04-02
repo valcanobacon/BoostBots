@@ -156,11 +156,11 @@ def _sanitize(message):
 def _new_message(data, value, numerology_func=number_to_numerology):
 
     amount = f"\x02\u200b{value}\x02 sats"
-    app = _get(data, "app_name", "via {app_name}")
-    sender = _get(data, "sender_name", default="Anonymous")
-    podcast = _get(data, "podcast", "\x02[{podcast}]\x02")
-    episode = _get(data, "episode", "\x02[{episode}]\x02")
-    message = _get(data, "message", 'saying "\x02{message}\x02"')
+    app = _sanitize(_get(data, "app_name", "via {app_name}"))
+    sender = _sanitize(_get(data, "sender_name", default="Anonymous"))
+    podcast = _sanitize(_get(data, "podcast", "\x02[{podcast}]\x02"))
+    episode = _sanitize(_get(data, "episode", "\x02[{episode}]\x02"))
+    message = _sanitize(_get(data, "message", 'saying "\x02{message}\x02"'))
     timestamp = _get(data, "ts", lambda _, v: "@{}".format(timedelta(seconds=int(v))))
     numerology = numerology_func(value)
 
