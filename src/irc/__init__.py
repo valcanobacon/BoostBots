@@ -111,11 +111,16 @@ def cli(
                         logging.debug("Donation too low, skipping", data)
                         continue
 
-                    message = _new_message(data, value)
-                    logging.debug(message)
+                    fullmessage = _new_message(data, value)
+                    logging.debug(fullmessage)
 
-                    for channel in irc_channel:
-                        bot.send("PRIVMSG", target=channel, message=message)
+                    # arbitrarily slice to chunks of 250 in an attempt
+                    # to accomodate long bot nicks/hostmasks, or channels
+                    message = chunks(fullmessage, 250)
+
+                    for chunk in message:
+                        for channel in irc_channel:
+                            bot.send("PRIVMSG", target=channel, message=chunk)
 
                 except Exception as exception:
                     click.echo(exception)
@@ -183,3 +188,8 @@ def _new_message(data, value, numerology_func=number_to_numerology):
         data += " " + app
 
     return data
+
+
+def chunks(l, n):
+    n = max(1, n)
+    return (l[i : i + n] for i in range(0, len(l), n))
