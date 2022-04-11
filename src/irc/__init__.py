@@ -1,9 +1,9 @@
 import asyncio
 import codecs
 import json
-from typing import List
 import logging
 from datetime import timedelta
+from typing import List
 
 import bottom
 import click

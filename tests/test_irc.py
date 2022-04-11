@@ -1,6 +1,6 @@
 from unittest.mock import sentinel
 
-from src.irc import _get, _new_message, _chunks
+from src.irc import _chunks, _get, _new_message
 
 
 def test_get():
