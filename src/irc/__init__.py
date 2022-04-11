@@ -117,7 +117,7 @@ def cli(
 
                     # arbitrarily slice to chunks of 250 in an attempt
                     # to accomodate long bot nicks/hostmasks, or channels
-                    message = chunks(fullmessage, 250)
+                    message = _chunks(fullmessage, 250)
 
                     for chunk in message:
                         for channel in irc_channel:
