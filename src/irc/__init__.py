@@ -3,6 +3,7 @@ import codecs
 import json
 import logging
 from datetime import timedelta
+from typing import List
 
 import bottom
 import click
@@ -190,6 +191,7 @@ def _new_message(data, value, numerology_func=number_to_numerology):
     return data
 
 
-def chunks(l, n):
+def _chunks(message: str, n: int) -> List[str]:
     n = max(1, n)
-    return (l[i : i + n] for i in range(0, len(l), n))
+    for i in range(0, len(message), n):
+        yield message[i : i + n]
