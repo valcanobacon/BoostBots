@@ -3,6 +3,7 @@ import codecs
 import json
 import logging
 from datetime import timedelta
+from typing import List
 
 import bottom
 import click
@@ -111,11 +112,16 @@ def cli(
                         logging.debug("Donation too low, skipping", data)
                         continue
 
-                    message = _new_message(data, value)
-                    logging.debug(message)
+                    fullmessage = _new_message(data, value)
+                    logging.debug(fullmessage)
 
-                    for channel in irc_channel:
-                        bot.send("PRIVMSG", target=channel, message=message)
+                    # arbitrarily slice to chunks of 250 in an attempt
+                    # to accomodate long bot nicks/hostmasks, or channels
+                    message = _chunks(fullmessage, 250)
+
+                    for chunk in message:
+                        for channel in irc_channel:
+                            bot.send("PRIVMSG", target=channel, message=chunk)
 
                 except Exception as exception:
                     click.echo(exception)
@@ -183,3 +189,9 @@ def _new_message(data, value, numerology_func=number_to_numerology):
         data += " " + app
 
     return data
+
+
+def _chunks(message: str, n: int) -> List[str]:
+    n = max(1, n)
+    for i in range(0, len(message), n):
+        yield message[i : i + n]
