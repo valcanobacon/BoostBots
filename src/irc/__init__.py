@@ -30,6 +30,7 @@ APP_PUBKEY = ""
 @click.option("--irc-realname", default="Boost IRC Bot")
 @click.option("--irc-nick-password")
 @click.option("--minimum-donation", type=int)
+@click.option("--allowed-name", multiple=True)
 @click.pass_context
 def cli(
     ctx,
@@ -46,6 +47,7 @@ def cli(
     irc_channel,
     irc_realname,
     minimum_donation,
+    allowed_name,
 ):
     ctx.ensure_object(dict)
 
@@ -100,6 +102,14 @@ def cli(
                         continue
 
                     data = json.loads(data)
+
+                    if allowed_name:
+                        name = data.get("name")
+                        if not name:
+                            continue
+
+                        if name.lower() not in [x.lower() for x in allowed_name]:
+                            continue
 
                     if "action" not in data or str(data["action"]).lower() != "boost":
                         continue
