@@ -1,8 +1,8 @@
 import asyncio
-from cmath import log
 import codecs
 import json
 import logging
+from cmath import log
 from datetime import datetime, timedelta
 from typing import List
 
@@ -95,6 +95,12 @@ def cli(
         for channel in irc_channel:
             bot.send("JOIN", channel=channel)
             logging.debug(f"Joined channel {channel} at {datetime.now().isoformat()}")
+
+    @bot.on("CLIENT_DISCONNECT")
+    async def reconnect(**kwargs):
+        await asyncio.sleep(2, loop=bot.loop)
+        bot.loop.create_task(bot.connect())
+        logging.info(f"Reconnected at {datetime.now().isoformat()}")
 
     @bot.on("PING")
     def keepalive(message, **kwargs):
