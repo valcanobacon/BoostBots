@@ -1,8 +1,9 @@
 import asyncio
+from cmath import log
 import codecs
 import json
 import logging
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import List
 
 import bottom
@@ -11,7 +12,7 @@ from lndgrpc import AsyncLNDClient
 
 from ..numerology import number_to_numerology
 
-APP_PUBKEY = ""
+logging.getLogger().setLevel(logging.INFO)
 
 
 @click.command()
@@ -31,6 +32,7 @@ APP_PUBKEY = ""
 @click.option("--irc-nick-password")
 @click.option("--minimum-donation", type=int)
 @click.option("--allowed-name", multiple=True)
+@click.option("--verbose", type=bool, default=False)
 @click.pass_context
 def cli(
     ctx,
@@ -48,8 +50,12 @@ def cli(
     irc_realname,
     minimum_donation,
     allowed_name,
+    verbose,
 ):
     ctx.ensure_object(dict)
+
+    if verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
 
     async_lnd = AsyncLNDClient(
         f"{lnd_host}:{lnd_port}",
@@ -84,13 +90,17 @@ def cli(
             bot.send(
                 "PRIVMSG", target="NickServ", message=f"IDENTIFY {irc_nick_password}"
             )
+            logging.debug(f"Identified with NickServ at {datetime.now().isoformat()}")
 
         for channel in irc_channel:
             bot.send("JOIN", channel=channel)
+            logging.debug(f"Joined channel {channel} at {datetime.now().isoformat()}")
 
     @bot.on("PING")
     def keepalive(message, **kwargs):
+        logging.debug(f"ping at {datetime.now().isoformat()}")
         bot.send("PONG", message=message)
+        logging.debug(f"pong at {datetime.now().isoformat()}")
 
     async def subscribe_invoices():
         invoices = async_lnd.subscribe_invoices()
@@ -134,7 +144,7 @@ def cli(
                             bot.send("PRIVMSG", target=channel, message=chunk)
 
                 except Exception as exception:
-                    click.echo(exception)
+                    logging.exception(exception)
 
     bot.loop.run_until_complete(bot.connect())
 
