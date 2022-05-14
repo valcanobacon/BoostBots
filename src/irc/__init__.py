@@ -1,8 +1,6 @@
 import asyncio
-import codecs
 import json
 import logging
-from cmath import log
 from datetime import datetime, timedelta
 from typing import List
 
@@ -32,7 +30,7 @@ logging.getLogger().setLevel(logging.INFO)
 @click.option("--irc-nick-password")
 @click.option("--minimum-donation", type=int)
 @click.option("--allowed-name", multiple=True)
-@click.option("--verbose", type=bool, default=False)
+@click.option("--verbose/--no-verbose", default=False)
 @click.pass_context
 def cli(
     ctx,

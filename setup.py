@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="BoostBots",
-    version="0.8.0",
+    version="0.8.1",
     python_requires=">=3.7",
     description="Boost Bots",
     author_email="boostaccount.w0v3n@aleeas.com",
