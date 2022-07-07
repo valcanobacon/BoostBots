@@ -13,6 +13,7 @@ setup(
         "console_scripts": [
             "boostirc=src.irc:cli",
             "boostodon=src.mastodon:cli",
+            "boostodon-leaderboard=src.mastodon:leaderboard",
             "boostrix=src.matrix:cli",
         ],
     },
