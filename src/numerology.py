@@ -67,6 +67,9 @@ def number_to_numerology(number: int) -> str:
 
         if match == "9653":
             results.append("🐺")
+           
+        if match == "30057":
+            results.append("🔁")
 
         if re.search(r"[68]00[68]", match):
             results.append("🎱")
