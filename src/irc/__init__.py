@@ -68,10 +68,6 @@ def cli(
         logging.getLogger().setLevel(logging.DEBUG)
 
     if irc_channel_map:
-        mapped_channels = {x[0] for x in irc_channel_map}
-        unused_mapped_channels = mapped_channels.difference(irc_channel)
-        if unused_mapped_channels:
-            logging.warning(f"Unused mapped channels: {list(unused_mapped_channels)}")
         channel_map = defaultdict(lambda: defaultdict(set))
         for channel, channel_map_type, value in irc_channel_map:
             channel_map[channel_map_type][value.lower().strip()].add(
@@ -117,6 +113,12 @@ def cli(
         for channel in irc_channel:
             bot.send("JOIN", channel=channel)
             logging.debug(f"Joined channel {channel} at {datetime.now().isoformat()}")
+
+        for channel, _, _ in irc_channel_map:
+            bot.send("JOIN", channel=channel)
+            logging.debug(
+                f"Joined mapped channel {channel} at {datetime.now().isoformat()}"
+            )
 
     @bot.on("CLIENT_DISCONNECT")
     async def reconnect(**kwargs):
