@@ -76,6 +76,7 @@ boostrix
 | 6006 | 🎱🎱 | Boobs Donation |
 | 8008 | 🎱🎱 | Boobs Donation |
 | 9653 | 🐺 | Wolf Donation |
+| 30057 | 🔁 | Boost Donation | 
 
 ## Combinations
 
