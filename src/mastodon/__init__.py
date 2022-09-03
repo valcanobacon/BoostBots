@@ -178,7 +178,7 @@ async def leaderboard(
                     continue
                 last_date = datetime.datetime.fromtimestamp(invoice.settle_date)
                 if last_date and last_date < end:
-                    continue 
+                    continue
                 yield invoice
             if last_date and last_date < end:
                 break

@@ -1,7 +1,10 @@
 import asyncio
+import itertools
 import json
 import logging
+from collections import defaultdict
 from datetime import datetime, timedelta
+from enum import Enum
 from typing import List
 
 import bottom
@@ -11,6 +14,13 @@ from lndgrpc import AsyncLNDClient
 from ..numerology import number_to_numerology
 
 logging.getLogger().setLevel(logging.INFO)
+
+
+class ChannelMapType(Enum):
+    Podcast = "podcast"
+    FeedId = "feedId"
+    Url = "url"
+    Guid = "guid"
 
 
 @click.command()
@@ -26,6 +36,7 @@ logging.getLogger().setLevel(logging.INFO)
 @click.option("--irc-password")
 @click.option("--irc-nick", default="boostirc")
 @click.option("--irc-channel", default=["#boostirc"], multiple=True)
+@click.option("--irc-channel-map", type=(str, ChannelMapType, str), multiple=True)
 @click.option("--irc-realname", default="Boost IRC Bot")
 @click.option("--irc-nick-password")
 @click.option("--minimum-donation", type=int)
@@ -45,6 +56,7 @@ def cli(
     irc_nick,
     irc_nick_password,
     irc_channel,
+    irc_channel_map,
     irc_realname,
     minimum_donation,
     allowed_name,
@@ -54,6 +66,18 @@ def cli(
 
     if verbose:
         logging.getLogger().setLevel(logging.DEBUG)
+
+    if irc_channel_map:
+        mapped_channels = {x[0] for x in irc_channel_map}
+        unused_mapped_channels = mapped_channels.difference(irc_channel)
+        if unused_mapped_channels:
+            logging.warning(f"Unused mapped channels: {list(unused_mapped_channels)}")
+        channel_map = defaultdict(lambda: defaultdict(set))
+        for channel, channel_map_type, value in irc_channel_map:
+            channel_map[channel_map_type][value.lower().strip()].add(
+                channel.lower().strip()
+            )
+        logging.debug(channel_map)
 
     async_lnd = AsyncLNDClient(
         f"{lnd_host}:{lnd_port}",
@@ -144,7 +168,28 @@ def cli(
                     message = _chunks(fullmessage, 250)
 
                     for chunk in message:
-                        for channel in irc_channel:
+                        channels = (
+                            set(
+                                itertools.chain(
+                                    channel_map[ChannelMapType.Podcast].get(
+                                        str(data.get("podcast", "")).lower().strip(), []
+                                    ),
+                                    channel_map[ChannelMapType.FeedId].get(
+                                        str(data.get("feedID", "")).lower().strip(), []
+                                    ),
+                                    channel_map[ChannelMapType.Url].get(
+                                        str(data.get("url", "")).lower().strip(), []
+                                    ),
+                                    channel_map[ChannelMapType.Guid].get(
+                                        str(data.get("guid", "")).lower().strip(), []
+                                    ),
+                                )
+                            )
+                            if channel_map
+                            else irc_channel
+                        ) or irc_channel
+
+                        for channel in channels:
                             bot.send("PRIVMSG", target=channel, message=chunk)
 
                 except Exception as exception:

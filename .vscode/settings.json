@@ -12,9 +12,15 @@
         "NOMOTD",
         "pytest",
         "Raspiblitz",
+        "realname",
         "sats",
         "Swasslenuff",
         "tlscert",
         "venv"
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
