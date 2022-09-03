@@ -71,6 +71,10 @@ def test_canada_donation():
     assert number_to_numerology(1867) == "🇨🇦"
 
 
+def test_boost_donation():
+    assert number_to_numerology(30057) == "🔁🔥"
+
+
 def test_wolf_donation():
     assert number_to_numerology(9653) == "🐺"
 
@@ -112,3 +116,4 @@ def test_combinations():
     assert number_to_numerology(69314) == "💋🥧🔥🔥"
     assert number_to_numerology(10321) == "🎳💥🔥"
     assert number_to_numerology(32121) == "💥🪙🔥"
+    assert number_to_numerology(2130057) == "🪙🔁🔥🔥🔥"
