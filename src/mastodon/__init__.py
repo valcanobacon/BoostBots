@@ -1,9 +1,9 @@
 import asyncio
+import collections
 import datetime
 import functools
 import json
 import logging
-import collections
 
 import atoot
 import click
