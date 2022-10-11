@@ -56,6 +56,40 @@ boostrix
 --lnd-tlscert /mnt/hdd/app-data/lnd/tls.cert --lnd-macaroon /mnt/hdd/app-data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
  ```
 
+## BoostBots IRC systemd service:
+
+1. `cd /etc/systemd/system`
+2. `sudo nano ./boostbot.service`
+
+    - Include the following in your boostbot.service file:
+            
+            [Unit]
+            Description='BoostBot system service'
+
+            [Service]
+            User=admin
+            WorkingDirectory=/home/admin/BoostBots/
+            ExecStart=/bin/bash -c 'cd /home/admin/BoostBots/ && source venv/bin/activate && boostirc --lnd-tlscert <path to tls cert> --lnd-macaroon <path to admin macaroon> --lnd-host 127.0.0.1 --irc-host <your IRC host> --irc-ssl true --irc-port 6697 --irc-nick <Your bot's IRC nickname> --irc-realname BoostIRC --irc-channel "#YourIRCChannel" --irc-channel-map "#YourIRCChannel" feedId <Podcast Index feed id> --irc-nick-password <password>'
+
+            [Install]
+            WantedBy=multi-user.target
+
+3. Reload the service files:
+`sudo systemctl daemon-reload`
+
+4. Start the service
+`sudo systemctl start boostbot.service`
+
+5. Check the status of the service
+`sudo systemctl status boostbot.service`
+
+6. Enable the service on future reboots
+`sudo systemctl enable boostbot.service`
+
+- OPTIONAL: if you want to disable the service on future reboots:
+`sudo systemctl disable boostbot.service`
+
+
 # Numerology
 
 | Sats | Emoji | Description |
