@@ -67,6 +67,7 @@ def cli(
     if verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
+    channel_map = None
     if irc_channel_map:
         channel_map = defaultdict(lambda: defaultdict(set))
         for channel, channel_map_type, value in irc_channel_map:
@@ -187,9 +188,11 @@ def cli(
                                     ),
                                 )
                             )
-                            if channel_map
-                            else irc_channel
-                        ) or irc_channel
+                            if channel_map is not None
+                            else set()
+                        )
+                        # Always post to all channels in irc_channel
+                        channels.update(irc_channel)
 
                         for channel in channels:
                             bot.send("PRIVMSG", target=channel, message=chunk)
