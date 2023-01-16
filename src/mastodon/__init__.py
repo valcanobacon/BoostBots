@@ -104,7 +104,7 @@ async def cli(
                 message += f"{numerology} {sender} boosted {value} sats"
                 message += "\n\n"
                 if "message" in data and data["message"]:
-                    message += f"\"{data['message']}\""
+                    message += f"\"{data['message'].strip()}\""
                     message += "\n\n"
                 message += "via {}".format(data.get("app_name", "Unknown"))
                 if "url" in data and data["url"] or "feedID" in data and data["feedID"]:
