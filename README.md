@@ -50,6 +50,22 @@ pip install -e '.[matrix]'
 boostrix
 ```
 
+## Boostr (Nostr Bot)
+
+### Quick Start
+
+```sh
+git clone https://github.com/valcanobacon/BoostBots.git
+cd BoostBots
+
+# Install dependencies
+python3 -m venv venv
+source venv/bin/activate
+pip install -e '.[nostr]'
+
+boostr
+```
+
 ## Raspiblitz
 
 ```sh
