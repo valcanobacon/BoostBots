@@ -15,6 +15,7 @@ setup(
             "boostodon=src.mastodon:cli",
             "boostodon-leaderboard=src.mastodon:leaderboard",
             "boostrix=src.matrix:cli",
+            "boostr=src.nostr:cli",
         ],
     },
     install_requires=[
@@ -35,6 +36,9 @@ setup(
         ],
         "matrix": [
             "matrix-nio<1,>=0.19.0",
+        ],
+        "nostr": [
+            "nostr @ git+https://git@github.com/valcanobacon/python-nostr#egg=nostr",
         ],
     },
 )

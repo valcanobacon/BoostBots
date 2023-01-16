@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
         "atoot",
+        "bech",
         "boostirc",
         "boostodon",
+        "boostr",
         "boostrix",
         "ENDOFMOTD",
         "htlcs",
@@ -10,6 +12,8 @@
         "lndgrpc",
         "msat",
         "NOMOTD",
+        "nostr",
+        "nsec",
         "pytest",
         "Raspiblitz",
         "realname",
