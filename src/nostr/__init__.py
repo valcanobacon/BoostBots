@@ -68,8 +68,14 @@ async def cli(
     )
 
     relay_manager = RelayManager()
-    relay_manager.add_relay("wss://nostr-pub.wellorder.net")
     relay_manager.add_relay("wss://relay.damus.io")
+    relay_manager.add_relay("wss://brb.io")
+    relay_manager.add_relay("wss://relay.stoner.com")
+    relay_manager.open_connections(
+        {"cert_reqs": ssl.CERT_NONE}
+    )  # NOTE: This disables ssl certificate verification
+    time.sleep(1.25)  # allow the connections to open
+    relay_manager.close_connections()
 
     async_lnd = AsyncLNDClient(
         f"{lnd_host}:{lnd_port}",
