@@ -27,6 +27,7 @@ def test_ducksinarow_donations():
     assert number_to_numerology(222222) == "🦆🦆🦆🦆🦆🦆🔥🔥🔥"
     assert number_to_numerology(2222222) == "🦆🦆🦆🦆🦆🦆🦆🔥🔥🔥"
 
+
 def test_dicks_donations():
     assert number_to_numerology(1) == "🍆💩"
     assert number_to_numerology(11) == "🍆🍆"
@@ -34,6 +35,7 @@ def test_dicks_donations():
     assert number_to_numerology(1111) == "🍆🍆🍆🍆"
     assert number_to_numerology(11111) == "🍆🍆🍆🍆🍆🔥"
     assert number_to_numerology(111111) == "🍆🍆🍆🍆🍆🍆🔥🔥🔥"
+
 
 def test_dice_donations():
     assert number_to_numerology(112) == "🎲"
