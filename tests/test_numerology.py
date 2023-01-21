@@ -62,6 +62,10 @@ def test_devil_donation():
     assert number_to_numerology(666) == "😈"
     assert number_to_numerology(666666) == "😈😈🔥🔥🔥"
 
+def test_angel_donation():
+    assert number_to_numerology(777) == "😇"
+    assert number_to_numerology(777777) == "😇😇🔥🔥🔥"
+
 
 def test_america_donation():
     assert number_to_numerology(1776) == "🇺🇸"

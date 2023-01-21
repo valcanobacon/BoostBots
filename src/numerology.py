@@ -12,7 +12,7 @@ COUNTDOWN_REGEX_PATTEN = "|".join(
 REGEX_PATTEN = "|".join(
     (
         COUNTDOWN_REGEX_PATTEN,
-        r"(?:10)+|11|21|33|69|73|88|420|666|1776|1867|30057|9653|[68]00[68]|^2+$",
+        r"(?:10)+|11|21|33|69|73|88|420|666|777|1776|1867|30057|9653|[68]00[68]|^2+$",
         PI_REGEX_PATTERN,
     )
 )
@@ -58,6 +58,9 @@ def number_to_numerology(number: int) -> str:
 
         if match == "666":
             results.append("😈")
+
+        if match == "777":
+            results.append("😇")
 
         if match == "1776":
             results.append("🇺🇸")

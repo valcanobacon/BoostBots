@@ -121,6 +121,7 @@ boostr
 | 321 | 💥 | Countdown Donation |
 | 420 | ✌👽💨 | Stoner Donation |
 | 666 | 😈 | Devil Donation |
+| 777 | 😇 | Angel Donation |
 | 1776 | 🇺🇸 | America Fuck Yeah Donation |
 | 1867 | 🇨🇦 | Canada Donation |
 | 6006 | 🎱🎱 | Boobs Donation |
