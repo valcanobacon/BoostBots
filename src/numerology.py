@@ -9,9 +9,15 @@ COUNTDOWN_REGEX_PATTEN = "|".join(
     COUNTDOWN[-n:] for n in range(len(COUNTDOWN), 3 - 1, -1)
 )
 
+COUNTUP = "123456789"
+COUNTUP_REGEX_PATTEN = "|".join(
+    reversed(list(COUNTUP[:n] for n in range(3, len(COUNTDOWN) + 1)))
+)
+
 REGEX_PATTEN = "|".join(
     (
         COUNTDOWN_REGEX_PATTEN,
+        COUNTUP_REGEX_PATTEN,
         r"(?:10)+|11|21|33|69|73|88|420|666|777|1776|1867|30057|9653|[68]00[68]|^2+$",
         PI_REGEX_PATTERN,
     )
@@ -89,6 +95,10 @@ def number_to_numerology(number: int) -> str:
         if re.search(COUNTDOWN_REGEX_PATTEN, match):
             for _ in range(len(match) - 2):
                 results.append("💥")
+
+        if re.search(COUNTUP_REGEX_PATTEN, match):
+            for _ in range(len(match) - 2):
+                results.append("🧛")
 
     if number >= 100000:
         results.append("🔥")

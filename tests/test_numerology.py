@@ -62,6 +62,7 @@ def test_devil_donation():
     assert number_to_numerology(666) == "😈"
     assert number_to_numerology(666666) == "😈😈🔥🔥🔥"
 
+
 def test_angel_donation():
     assert number_to_numerology(777) == "😇"
     assert number_to_numerology(777777) == "😇😇🔥🔥🔥"
@@ -102,6 +103,16 @@ def test_countdown_donation():
     assert number_to_numerology(7654321) == "💥💥💥💥💥🔥🔥🔥"
     assert number_to_numerology(87654321) == "💥💥💥💥💥💥🔥🔥🔥"
     assert number_to_numerology(987654321) == "💥💥💥💥💥💥💥🔥🔥🔥"
+
+
+def test_countup_donation():
+    assert number_to_numerology(123) == "🧛"
+    assert number_to_numerology(1234) == "🧛🧛"
+    assert number_to_numerology(12345) == "🧛🧛🧛🔥"
+    assert number_to_numerology(123456) == "🧛🧛🧛🧛🔥🔥🔥"
+    assert number_to_numerology(1234567) == "🧛🧛🧛🧛🧛🔥🔥🔥"
+    assert number_to_numerology(12345678) == "🧛🧛🧛🧛🧛🧛🔥🔥🔥"
+    assert number_to_numerology(123456789) == "🧛🧛🧛🧛🧛🧛🧛🔥🔥🔥"
 
 
 def test_combinations():

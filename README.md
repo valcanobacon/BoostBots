@@ -177,6 +177,16 @@ Any Countdown of at least 3 characters gets you 💥.
 | 4321 | 💥💥 |
 | 54321 | 💥💥💥🔥 |
 
+## Countup Donation
+Any Countup of at least 3 characters gets you 🧛.
+4 characters is double, 5 characters is triple, ...
+
+| Sats | Emoji |
+| - | - |
+| 123 | 🧛 |
+| 1234 | 🧛🧛 |
+| 12345 | 🧛🧛🧛🔥 |
+
 ## Lit Donations
 
 | Sats | Emoji |
