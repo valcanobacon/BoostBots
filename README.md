@@ -148,6 +148,15 @@ You can combine numbers, order matters!
 | 696969 | 💋💋💋🔥🔥🔥 | Triple Kiss Triple Lit Donation|
 | 698008 | 💋🎱🎱🔥🔥🔥 | Kiss Boobs Triple Lit Donation|
 
+## Satchel of Richards Donation
+If the value is all 1s then you get that many 🍆s
+
+| Sats | Emoji |
+| - | - |
+| 11 | 🍆🍆 |
+| 111 | 🍆🍆🍆 |
+| 1111 | 🍆🍆🍆🍆 |
+
 ## Ducks In a Row Donation
 If the value is all 2s then you get that many 🦆s
 
