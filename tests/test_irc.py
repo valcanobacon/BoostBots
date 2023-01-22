@@ -1,6 +1,6 @@
 from unittest.mock import sentinel
 
-from src.irc import _chunks, _get, _new_message
+from src.irc import _chunks, _get, _new_message, _normalize_channel_name
 
 
 def test_get():
@@ -69,3 +69,10 @@ def test_long_message_chunking():
         "tuvwxyz0123456789 abcdefghijklmnOpqrstuvwxyz0123456789 abcdefghijklmnoPqrstuvwxyz0123456789 abcdefghijklmnopQrstuvwxyz0123456789 abcdefghijklmnopqRstuvwxyz0123456789 abcdefghijklmnopqrStuvwxyz0123456789 abcdefghijklmnopqrsTuvwxyz0123456789 abcdefghij",
         "klmnopqrstUvwxyz0123456789 abcdefghijklmnopqrstuVwxyz0123456789 abcdefghijklmnopqrstuvWxyz0123456789 abcdefghijklmnopqrstuvwXyz0123456789 abcdefghijklmnopqrstuvwxYz0123456789 abcdefghijklmnopqrstuvwxyZ0123456789",
     ]
+
+
+def test_normalize_channel_name():
+    assert _normalize_channel_name("BowlAfterBowl") == "#bowlafterbowl"
+    assert _normalize_channel_name("#BowlAfterBowl") == "#bowlafterbowl"
+    assert _normalize_channel_name(" bowlafterbowl ") == "#bowlafterbowl"
+    assert _normalize_channel_name(" #BOWLAFTERBOWL ") == "#bowlafterbowl"
