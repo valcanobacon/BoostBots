@@ -33,6 +33,9 @@ setup(
         ],
         "mastodon": [
             "atoot @ git+https://git@github.com/valcanobacon/atoot@1.0.2#egg=atoot",
+            "beautifulsoup4<5,>=4.12.2",
+            "requests<3,>=2.31.0",
+            "lxml<5,>=4.9.0",
         ],
         "matrix": [
             "matrix-nio<1,>=0.19.0",
