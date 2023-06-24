@@ -100,23 +100,27 @@ async def cli(
                     value = invoice.value
 
                 if minimum_donation is not None and value < minimum_donation:
-                    logging.debug("Donation too low, skipping", data)
+                    logging.debug("Donation too low, skipping: %s", data)
                     continue
 
-                message = main_message(data, value)
-
-                logging.debug(message)
-                await mastodon.create_status(
-                    status=message,
-                    in_reply_to_id=None,
-                    # bug work around to reset value
-                    params={},
+                status = await send_to_social_interact(
+                    mastodon, podcast_index, data, value
                 )
+                if status:
+                    logging.info("Boosting: %s", status)
+                    await mastodon.status_boost(status)
+                else:
+                    message = main_message(data, value)
+                    logging.info("Creating Status: %s", message)
+                    await mastodon.create_status(
+                        status=message,
+                        in_reply_to_id=None,
+                        # bug work around to reset value
+                        params={},
+                    )
 
-                await send_to_social_interact(mastodon, podcast_index, data, value)
-
-            except:
-                logging.exception("error")
+            except atoot.MastodonError as error:
+                logging.exception("error: %s", error)
 
 
 async def send_to_social_interact(mastodon, podcast_index, data, value):
@@ -162,10 +166,8 @@ async def send_to_social_interact(mastodon, podcast_index, data, value):
     if not reply_to_id:
         return
 
-    logging.debug(message)
-    logging.debug(reply_to_id)
-
-    await mastodon.create_status(
+    logging.info("Creating Status (reply to %s): %s", reply_to_id, message)
+    return await mastodon.create_status(
         status=message,
         in_reply_to_id=reply_to_id,
         # bug work around to reset value
