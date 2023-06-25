@@ -16,6 +16,7 @@ setup(
             "boostodon-leaderboard=src.mastodon:leaderboard",
             "boostrix=src.matrix:cli",
             "boostr=src.nostr:cli",
+            "boostxmpp=src.xmpp:cli",
         ],
     },
     install_requires=[
@@ -43,5 +44,11 @@ setup(
         "nostr": [
             "nostr @ git+https://git@github.com/valcanobacon/python-nostr#egg=nostr",
         ],
+        "xmpp": [
+            "aioxmpp>=0.13.3",
+            "beautifulsoup4<5,>=4.12.2",
+            "requests<3,>=2.31.0",
+            "lxml<5,>=4.9.0",
+        ]
     },
 )
