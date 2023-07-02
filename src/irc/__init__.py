@@ -72,7 +72,7 @@ def cli(
         channel_map = defaultdict(lambda: defaultdict(set))
         for channel, channel_map_type, value in irc_channel_map:
             channel_map[channel_map_type][value.lower().strip()].add(
-                channel.lower().strip()
+                _normalize_channel_name(channel)
             )
         logging.debug(channel_map)
 
@@ -192,7 +192,7 @@ def cli(
                             else set()
                         )
                         # Always post to all channels in irc_channel
-                        channels.update(irc_channel)
+                        channels.update(_normalize_channel_name(x) for x in irc_channel)
 
                         for channel in channels:
                             bot.send("PRIVMSG", target=channel, message=chunk)
@@ -231,6 +231,10 @@ def _sanitize(message):
             )
         return message.replace("\n", "")
     return message
+
+
+def _normalize_channel_name(channel_name: str) -> str:
+    return f"#{channel_name.lower().strip().strip('#')}"
 
 
 def _new_message(data, value, numerology_func=number_to_numerology):

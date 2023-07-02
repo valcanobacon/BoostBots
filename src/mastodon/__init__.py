@@ -4,13 +4,19 @@ import datetime
 import functools
 import json
 import logging
+from urllib.parse import urlparse
 
 import atoot
 import click
+import requests
+from bs4 import BeautifulSoup
 from lndgrpc import AsyncLNDClient
 from lndgrpc.aio.async_client import ln
 
 from ..numerology import number_to_numerology
+from ..podcast_index import PodcastIndex
+
+logging.getLogger().setLevel(logging.INFO)
 
 
 def async_cmd(func):
@@ -28,6 +34,8 @@ def async_cmd(func):
 @click.option("--lnd-tlscert", type=click.Path(exists=True), default="tls.cert")
 @click.option("--mastodon-instance")
 @click.option("--mastodon-access-token")
+@click.option("--podcast-index-api-key")
+@click.option("--podcast-index-api-secret")
 @click.option("--minimum-donation", type=int)
 @click.option("--allowed-name", multiple=True)
 @click.pass_context
@@ -40,10 +48,18 @@ async def cli(
     lnd_tlscert,
     mastodon_instance,
     mastodon_access_token,
+    podcast_index_api_key,
+    podcast_index_api_secret,
     minimum_donation,
     allowed_name,
 ):
     ctx.ensure_object(dict)
+
+    podcast_index = PodcastIndex(
+        user_agent="BoostBots",
+        api_key=podcast_index_api_key,
+        api_secret=podcast_index_api_secret,
+    )
 
     mastodon = await atoot.MastodonAPI.create(
         mastodon_instance, access_token=mastodon_access_token
@@ -84,43 +100,148 @@ async def cli(
                     value = invoice.value
 
                 if minimum_donation is not None and value < minimum_donation:
-                    logging.debug("Donation too low, skipping", data)
+                    logging.debug("Donation too low, skipping: %s", data)
                     continue
 
-                sender = data.get("sender_name", "Anonymous")
-
-                numerology = number_to_numerology(value)
-
-                message = ""
-                if "podcast" in data and data["podcast"]:
-                    message += data["podcast"]
-                if "episode" in data and data["episode"]:
-                    message += f" {data['episode']}"
-                if "ts" in data and data["ts"]:
-                    message += "@ {}".format(
-                        datetime.timedelta(seconds=int(data["ts"]))
-                    )
-                message += "\n\n"
-                message += f"{numerology} {sender} boosted {value} sats"
-                message += "\n\n"
-                if "message" in data and data["message"]:
-                    message += f"\"{data['message'].strip()}\""
-                    message += "\n\n"
-                message += "via {}".format(data.get("app_name", "Unknown"))
-                if "url" in data and data["url"] or "feedID" in data and data["feedID"]:
-                    message += "\n\n"
-                if "url" in data and data["url"]:
-                    message += "{}\n".format(data["url"])
-                if "feedID" in data and data["feedID"]:
-                    message += "https://podcastindex.org/podcast/{}\n".format(
-                        data["feedID"]
+                status = await send_to_social_interact(
+                    mastodon, podcast_index, data, value
+                )
+                if status:
+                    logging.info("Boosting: %s", status)
+                    await mastodon.status_boost(status)
+                else:
+                    message = main_message(data, value)
+                    logging.info("Creating Status: %s", message)
+                    await mastodon.create_status(
+                        status=message,
+                        in_reply_to_id=None,
+                        # bug work around to reset value
+                        params={},
                     )
 
-                logging.debug(message)
-                await mastodon.create_status(status=message)
+            except atoot.MastodonError as error:
+                logging.exception("error: %s", error)
 
-            except:
-                logging.exception("error")
+
+async def send_to_social_interact(mastodon, podcast_index, data, value):
+    message = reply_message(data, value)
+
+    feed_url = data.get("url")
+    if not feed_url:
+        feed_url = get_feed_url_from_podcast_index(podcast_index, data)
+        if not feed_url:
+            return
+
+    logging.debug(feed_url)
+
+    soup = get_feed(feed_url)
+    if not soup:
+        return
+
+    items = soup.find_all(["podcast:liveItem", "item"])
+    item = next(
+        filter(
+            lambda x: x.title.get_text() == data.get("episode")
+            or x.guid.get_text() == data.get("guid"),
+            items,
+        ),
+        None,
+    )
+    if not item:
+        return
+
+    logging.debug(item)
+
+    social_interact = item.find("podcast:socialinteract", protocol="activitypub")
+    if not (social_interact and social_interact.get("uri")):
+        return
+
+    logging.debug(social_interact)
+
+    status = await mastodon.search(social_interact["uri"], resolve=True)
+    if not (status and status.get("statuses")):
+        return
+
+    reply_to_id = status.get("statuses")[0].get("id")
+    if not reply_to_id:
+        return
+
+    logging.info("Creating Status (reply to %s): %s", reply_to_id, message)
+    return await mastodon.create_status(
+        status=message,
+        in_reply_to_id=reply_to_id,
+        # bug work around to reset value
+        params={},
+    )
+
+
+def get_feed(feed_url):
+    response = requests.get(feed_url)
+    if response.status_code not in [requests.status_codes.codes.ok]:
+        return
+
+    return BeautifulSoup(response.text, "lxml")
+
+
+def get_feed_url_from_podcast_index(podcast_index, data):
+    feed_id = data.get("feedID")
+    if not feed_id:
+        return
+
+    try:
+        result = podcast_index.podcasts_byfeedid(feed_id)
+        return result.data["feed"]["url"]
+    except:
+        pass
+
+
+def main_message(data, value):
+
+    numerology = number_to_numerology(value)
+
+    sender = data.get("sender_name", "Anonymous")
+
+    message = ""
+    if "podcast" in data and data["podcast"]:
+        message += data["podcast"]
+    if "episode" in data and data["episode"]:
+        message += f" {data['episode']}"
+    if "ts" in data and data["ts"]:
+        message += " @ {}".format(datetime.timedelta(seconds=int(data["ts"])))
+    message += "\n\n"
+    message += f"{numerology} {sender} boosted {value} sats"
+    message += "\n\n"
+    if "message" in data and data["message"]:
+        message += f"\"{data['message'].strip()}\""
+        message += "\n\n"
+    message += "via {}".format(data.get("app_name", "Unknown"))
+    if "url" in data and data["url"] or "feedID" in data and data["feedID"]:
+        message += "\n\n"
+    if "url" in data and data["url"]:
+        message += "{}\n".format(data["url"])
+    if "feedID" in data and data["feedID"]:
+        message += "https://podcastindex.org/podcast/{}\n".format(data["feedID"])
+
+    return message
+
+
+def reply_message(data, value):
+    numerology = number_to_numerology(value)
+
+    sender = data.get("sender_name", "Anonymous")
+
+    message = f"{numerology} {sender} boosted {value} sats"
+
+    if "ts" in data and data["ts"]:
+        message += " @ {}".format(datetime.timedelta(seconds=int(data["ts"])))
+
+    message += "\n\n"
+    if "message" in data and data["message"]:
+        message += f"\"{data['message'].strip()}\""
+        message += "\n\n"
+    message += "via {}".format(data.get("app_name", "Unknown"))
+
+    return message
 
 
 @click.command()
