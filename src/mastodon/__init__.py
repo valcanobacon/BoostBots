@@ -138,7 +138,7 @@ async def send_to_social_interact(mastodon, podcast_index, data, value):
     if not soup:
         return
 
-    items = soup.find_all(["podcast:liveitem", "item"])
+    items = soup.find_all(["podcast:liveItem", "item"])
     item = next(
         filter(
             lambda x: x.title.get_text() == data.get("episode")
