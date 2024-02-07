@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "BoostBots"
+version = "0.9.1"
+authors = [{email = "boostaccount.w0v3n@aleeas.com"}]
+description = "Boost Bots"
+requires-python = ">=3.7"
+dependencies = [
+    "lnd-grpc-client<1,>=0.3.39",
+    "click<9,>=8.0.3",
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest<7,>=6.2.5",
+    "black<23,>=22.1.0",
+    "isort<6,>=5.10.1",
+]
+irc = ["bottom<3,>=2.2.0"]
+mastodon = ["atoot @ git+https://git@github.com/valcanobacon/atoot@1.0.2"] # egg=atoot
+matrix = ["matrix-nio<1,>=0.19.0"]
+nostr = ["nostr @ git+https://git@github.com/valcanobacon/python-nostr"] # egg=nostr
+
+[project.scripts]
+boostirc = "src.irc:cli"
+boostodon = "src.mastodon:cli"
+boostodon-leaderboard = "src.mastodon:leaderboard"
+boostrix = "src.matrix:cli"
+boostr = "src.nostr:cli"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ["src"] # src.*
+namespaces = false

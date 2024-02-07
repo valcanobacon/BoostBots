@@ -1,44 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-from setuptools import find_packages, setup
+import setuptools
 
-setup(
-    name="BoostBots",
-    version="0.9.1",
-    python_requires=">=3.7",
-    description="Boost Bots",
-    author_email="boostaccount.w0v3n@aleeas.com",
-    packages=find_packages(include=["src", "src.*"]),
-    entry_points={
-        "console_scripts": [
-            "boostirc=src.irc:cli",
-            "boostodon=src.mastodon:cli",
-            "boostodon-leaderboard=src.mastodon:leaderboard",
-            "boostrix=src.matrix:cli",
-            "boostr=src.nostr:cli",
-        ],
-    },
-    install_requires=[
-        "lnd-grpc-client<1,>=0.3.39",
-        "click<9,>=8.0.3",
-    ],
-    extras_require={
-        "tests": [
-            "pytest<7,>=6.2.5",
-            "black<23,>=22.1.0",
-            "isort<6,>=5.10.1",
-        ],
-        "irc": [
-            "bottom<3,>=2.2.0",
-        ],
-        "mastodon": [
-            "atoot @ git+https://git@github.com/valcanobacon/atoot@1.0.2#egg=atoot",
-        ],
-        "matrix": [
-            "matrix-nio<1,>=0.19.0",
-        ],
-        "nostr": [
-            "nostr @ git+https://git@github.com/valcanobacon/python-nostr#egg=nostr",
-        ],
-    },
-)
+if __name__ == "__main__":
+    setuptools.setup()
